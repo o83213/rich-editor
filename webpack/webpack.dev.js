@@ -1,7 +1,6 @@
 const webpack = require("webpack");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-// import webpack from "webpack";
-// import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin";
+
 module.exports = {
   // export default {
   mode: "development",
