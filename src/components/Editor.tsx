@@ -21,6 +21,8 @@ import MarkButton from "./Button/MarkButton";
 import StateButton from "./Button/ColorButton";
 import { serialize, deserialize } from "../plugins/helpers/serializeHelper";
 import AnchorList from "./Anchor/AnchorList";
+import MainNavigation from "./Navigation/MainNavigation";
+import Title from "./Title/Title";
 interface HotKeyType {
   [key: string]: string;
 }
@@ -42,7 +44,7 @@ interface LeafProps {
   children: React.ReactNode;
   leaf: SlateText;
 }
-const RichTextExample = () => {
+const LionEditor = () => {
   const renderElement = useCallback(
     (props: ElementProps) => <CustomElement {...props} />,
     []
@@ -74,14 +76,6 @@ const RichTextExample = () => {
       return [];
     }
   );
-  const addAnchorHandler = (name: string, anchorId: string) => {
-    setAnchorList((prev) => [...prev, { name, id: anchorId }]);
-  };
-  const removeAnchorHandler = (anchorId: string) => {
-    setAnchorList((prev) =>
-      prev.filter((anchorData) => anchorData.id !== anchorId)
-    );
-  };
   return (
     <Slate
       editor={editor}
@@ -99,87 +93,41 @@ const RichTextExample = () => {
         }
       }}
     >
-      <Toolbar>
-        <MarkButton format="bold" icon="format_bold" />
-        <MarkButton format="italic" icon="format_italic" />
-        <MarkButton format="delete" icon="format_strikethrough" />
-        <MarkButton format="underline" icon="format_underlined" />
-        <MarkButton format="code" icon="code" />
-        <StateButton
-          format="color"
-          icon="format_color_text"
-          defaultState="black"
-        />
-        <BlockButton format="left" icon="format_align_left" />
-        <BlockButton format="center" icon="format_align_center" />
-        <BlockButton format="right" icon="format_align_right" />
-        <BlockButton format="justify" icon="format_align_justify" />
-      </Toolbar>
-      <Toolbar>
-        <BlockButton format="link" icon="link" />
-        <BlockButton format="link" icon="link_off" />
-        <BlockButton
-          format="anchor"
-          icon="anchor"
-          callback={[addAnchorHandler, removeAnchorHandler]}
-        />
-        <BlockButton format="image" icon="image" />
-        <BlockButton format="video" icon="video_library" />
-        <BlockButton format="embed" icon="html" />
-        <BlockButton format="table" icon="table_chart" />
-        <BlockButton format="heading-one" icon="looks_one" />
-        <BlockButton format="heading-two" icon="looks_two" />
-        <BlockButton format="quote" icon="format_quote" />
-        <BlockButton format="numbered-list" icon="format_list_numbered" />
-        <BlockButton format="bulleted-list" icon="format_list_bulleted" />
-      </Toolbar>
-      <Editable
-        renderElement={renderElement}
-        renderLeaf={renderLeaf}
-        placeholder="Enter some rich text…"
-        spellCheck
-        autoFocus
-        onKeyDown={(event) => {
-          for (const hotkey in HOTKEYS) {
-            if (isHotkey(hotkey, event)) {
-              event.preventDefault();
-              const mark = HOTKEYS[hotkey];
-              toggleMark(editor, mark);
-            }
-          }
-        }}
-      />
-      <button
-        onClick={() => {
-          console.log(slateValue);
-          const htmlString = slateValue
-            .map((node) => {
-              const serializedNodeString = serialize(node);
-              return serializedNodeString;
-            })
-            .join("");
-          console.log(htmlString);
-          // parse back to json
-          const document = new DOMParser().parseFromString(
-            htmlString,
-            "text/html"
-          );
-          const jsonData = deserialize(document.body);
-        }}
-      >
-        serialize content
-      </button>
-      <button
-        onClick={() => {
-          const newId = prompt("New id?");
-          if (newId) addAnchorHandler("test", newId);
-        }}
-      >
-        add Anchor
-      </button>
-      <AnchorList listData={anchorList} />
+      <div className="container1">
+        <MainNavigation />
+        <div className="container2">
+          <Title />
+          <Toolbar>
+            <BlockButton format="bold" icon="format_align_left" />
+          </Toolbar>
+          <Toolbar>
+            <BlockButton format="bold" icon="link" />
+          </Toolbar>
+          <div className="container3">
+            <Toolbar>
+              <BlockButton format="link" icon="link" />
+            </Toolbar>
+            <Editable
+              renderElement={renderElement}
+              renderLeaf={renderLeaf}
+              placeholder="開始寫作吧!"
+              spellCheck
+              autoFocus
+              onKeyDown={(event) => {
+                for (const hotkey in HOTKEYS) {
+                  if (isHotkey(hotkey, event)) {
+                    event.preventDefault();
+                    const mark = HOTKEYS[hotkey];
+                    toggleMark(editor, mark);
+                  }
+                }
+              }}
+            />
+          </div>
+        </div>
+      </div>
     </Slate>
   );
 };
 
-export default RichTextExample;
+export default LionEditor;

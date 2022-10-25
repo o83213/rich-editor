@@ -2,6 +2,13 @@ import { Descendant } from "slate";
 export const defaultValue: Descendant[] = [
   {
     type: "paragraph",
+    children: [{ text: "" }],
+  },
+];
+/*
+[
+  {
+    type: "paragraph",
     children: [
       { text: "This is editable " },
       { text: "rich", bold: true },
@@ -94,3 +101,4 @@ export const defaultValue: Descendant[] = [
     ],
   },
 ];
+*/
