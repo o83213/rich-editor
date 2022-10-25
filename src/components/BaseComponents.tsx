@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Ref, forwardRef, PropsWithChildren } from "react";
 import { cx, css } from "@emotion/css";
 interface BaseProps {
   children: React.ReactNode;
@@ -11,6 +11,7 @@ interface ButtonProps extends BaseProps {
   buttonColor?: string;
   onMouseDown?: (event: React.MouseEvent) => void;
 }
+type OrNull<T> = T | null;
 export const Button = ({
   className,
   active,
@@ -48,7 +49,8 @@ export const Icon = ({ className, ...props }: BaseProps) => {
         "material-icons",
         className,
         css`
-          font-size: 18px;
+          font-size: 28px;
+          color: rgb(122, 117, 116);
           vertical-align: text-bottom;
         `
       )}
@@ -56,25 +58,28 @@ export const Icon = ({ className, ...props }: BaseProps) => {
   );
 };
 
-export const Menu = ({ className, ...props }: BaseProps) => {
-  return (
-    <div
-      {...props}
-      className={cx(
-        className,
-        css`
-          & > * {
-            display: inline-block;
-          }
+export const Menu = React.forwardRef(
+  ({ className, ...props }: any, ref: any) => {
+    return (
+      <div
+        {...props}
+        ref={ref}
+        className={cx(
+          className,
+          css`
+            & > * {
+              display: inline-block;
+            }
 
-          & > * + * {
-            margin-left: 15px;
-          }
-        `
-      )}
-    />
-  );
-};
+            & > * + * {
+              margin-left: 15px;
+            }
+          `
+        )}
+      />
+    );
+  }
+);
 
 export const Toolbar = ({ className, ...props }: BaseProps) => {
   return (

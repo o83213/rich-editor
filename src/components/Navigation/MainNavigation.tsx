@@ -1,15 +1,22 @@
 import { css } from "@emotion/css";
+import LeftNavigation from "./LeftNavigation/LeftNavigation";
+import RightNavigation from "./RightNavigation/RightNavigation";
 const MainNavigation = () => {
   return (
     <div
       className={css`
-        height: 50px;
-        border: 0.1rem solid red;
+        position: relative;
+        height: 56px;
+        display: flex;
+        -webkit-box-pack: justify;
+        justify-content: space-between;
+        -webkit-box-align: center;
+        align-items: center;
       `}
     >
-      123
+      <LeftNavigation />
+      <RightNavigation />
     </div>
   );
 };
-
 export default MainNavigation;

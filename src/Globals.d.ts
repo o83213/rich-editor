@@ -147,3 +147,5 @@ declare module "slate" {
     Text: CustomText & EmptyText;
   }
 }
+
+declare module "*.png";

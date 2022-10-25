@@ -21,8 +21,13 @@ import MarkButton from "./Button/MarkButton";
 import StateButton from "./Button/ColorButton";
 import { serialize, deserialize } from "../plugins/helpers/serializeHelper";
 import AnchorList from "./Anchor/AnchorList";
-import MainNavigation from "./Navigation/MainNavigation";
+import NavigationWrapper from "./Navigation/NavigationWrapper";
 import Title from "./Title/Title";
+import { css, cx } from "@emotion/css";
+import Toolbar1 from "./Toolbars/Toolbar1";
+import Toolbar2 from "./Toolbars/Toolbar2";
+import Toolbar3 from "./Toolbars/Toolbar3";
+import HoveringToolbar from "./Toolbars/HoveringToolbar";
 interface HotKeyType {
   [key: string]: string;
 }
@@ -93,20 +98,26 @@ const LionEditor = () => {
         }
       }}
     >
-      <div className="container1">
-        <MainNavigation />
+      <div
+        className={css`
+          position: relative;
+          z-index: 0;
+          margin: 0px auto;
+          padding-top: 100px;
+        `}
+      >
+        <NavigationWrapper />
         <div className="container2">
           <Title />
-          <Toolbar>
-            <BlockButton format="bold" icon="format_align_left" />
-          </Toolbar>
-          <Toolbar>
-            <BlockButton format="bold" icon="link" />
-          </Toolbar>
-          <div className="container3">
-            <Toolbar>
-              <BlockButton format="link" icon="link" />
-            </Toolbar>
+          <Toolbar1 />
+          <Toolbar2 />
+          <div
+            className={css`
+              width: 100%;
+              max-width: 740px;
+              margin: 0 auto;
+            `}
+          >
             <Editable
               renderElement={renderElement}
               renderLeaf={renderLeaf}
@@ -123,6 +134,8 @@ const LionEditor = () => {
                 }
               }}
             />
+            {/* <Toolbar3 /> */}
+            <HoveringToolbar />
           </div>
         </div>
       </div>
