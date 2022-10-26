@@ -18,6 +18,7 @@ const CustomElement = (props: any) => {
             padding-left: 10px;
             color: #aaa;
             font-style: italic;
+            display: block;
           `}
           style={style}
           {...attributes}
@@ -25,6 +26,21 @@ const CustomElement = (props: any) => {
         >
           {children}
         </q>
+      );
+    case "code":
+      return (
+        <code
+          className={css`
+            background-color: #eee;
+            padding: 3px;
+            display: block;
+          `}
+          style={style}
+          {...attributes}
+          {...element}
+        >
+          {children}
+        </code>
       );
     case "link":
       return (
@@ -85,7 +101,15 @@ const CustomElement = (props: any) => {
       return <td {...attributes}>{children}</td>;
     default:
       return (
-        <p style={style} {...attributes} {...element}>
+        <p
+          className={css`
+            margin: 0;
+            padding: 0;
+          `}
+          style={style}
+          {...attributes}
+          {...element}
+        >
           {children}
         </p>
       );

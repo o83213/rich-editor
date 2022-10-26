@@ -12,7 +12,6 @@ const HoveringToolbar = () => {
   useEffect(() => {
     const el = ref.current;
     const { selection } = editor;
-    console.log("Hovering");
     if (!el) {
       return;
     }
@@ -30,10 +29,8 @@ const HoveringToolbar = () => {
     const domRange = domSelection.getRangeAt(0);
     const rect = domRange.getBoundingClientRect();
     el.style.opacity = "1";
-    el.style.top = `${rect.top + window.pageYOffset - el.offsetHeight}px`;
-    el.style.left = `${
-      rect.left + window.pageXOffset - el.offsetWidth / 2 + rect.width / 2
-    }px`;
+    el.style.top = `${rect.top + window.pageYOffset - 1.2 * el.offsetHeight}px`;
+    el.style.left = `${rect.left + window.pageXOffset + rect.width / 2}px`;
   });
 
   return (
@@ -58,18 +55,30 @@ const HoveringToolbar = () => {
         e.preventDefault();
       }}
     >
-      <MarkButton format="bold" icon="format_bold" />
-      <MarkButton format="italic" icon="format_italic" />
-      <MarkButton format="delete" icon="format_strikethrough" />
-      <MarkButton format="underline" icon="format_underlined" />
+      <MarkButton format="bold" icon="format_bold" description="粗體" />
+      <MarkButton format="italic" icon="format_italic" description="斜體" />
+      <MarkButton
+        format="delete"
+        icon="format_strikethrough"
+        description="刪除線"
+      />
+      <MarkButton
+        format="underline"
+        icon="format_underlined"
+        description="底線"
+      />
       <div
         className={css`
           height: 85%;
           border-left: 1px solid rgb(242, 241, 240);
         `}
       ></div>
-      <BlockButton format="symbol" icon="data_array" />
-      <BlockButton format="link" icon="link" />
+      <BlockButton
+        format="symbol"
+        icon="data_array"
+        description="插入常見符號"
+      />
+      <BlockButton format="link" icon="link" description="建立連結" />
     </Menu>
   );
 };

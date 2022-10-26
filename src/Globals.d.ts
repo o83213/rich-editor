@@ -16,6 +16,12 @@ export type QuoteElement = {
   id?: string;
   children: Descendant[];
 };
+export type CodeElement = {
+  type: "code";
+  align?: string;
+  id?: string;
+  children: Descendant[];
+};
 
 export type NumberedListElement = {
   type: "numbered-list";
@@ -108,6 +114,7 @@ export type TitleElement = {
 
 type CustomElement =
   | QuoteElement
+  | CodeElement
   | BulletedListElement
   | NumberedListElement
   | ListItemElement
@@ -127,7 +134,6 @@ type CustomElement =
 export interface CustomText {
   bold?: boolean;
   italic?: boolean;
-  code?: boolean;
   underline?: boolean;
   delete?: boolean;
   color?: string;

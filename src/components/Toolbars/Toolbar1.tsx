@@ -23,9 +23,9 @@ const Toolbar1 = () => {
         align-items: center;
       `}
     >
-      <BlockButton format="sub-title" icon="format_size" />
-      <BlockButton format="quote" icon="format_quote" />
-      <BlockButton format="code" icon="code" />
+      <BlockButton format="sub-title" icon="format_size" description="副標題" />
+      <BlockButton format="quote" icon="format_quote" description="引言" />
+      <BlockButton format="code" icon="code" description="程式碼" />
       <div
         className={css`
           width: 85%;
@@ -33,9 +33,21 @@ const Toolbar1 = () => {
           margin: 6px 0px;
         `}
       ></div>
-      <BlockButton format="center" icon="format_align_center" />
-      <BlockButton format="numbered-list" icon="format_list_numbered" />
-      <BlockButton format="bulleted-list" icon="format_list_bulleted" />
+      <BlockButton
+        format="center"
+        icon="format_align_center"
+        description="邊更對齊"
+      />
+      <BlockButton
+        format="numbered-list"
+        icon="format_list_numbered"
+        description="項目符號"
+      />
+      <BlockButton
+        format="bulleted-list"
+        icon="format_list_bulleted"
+        description="數字項目符號"
+      />
       <div
         className={css`
           width: 85%;
@@ -43,7 +55,7 @@ const Toolbar1 = () => {
           margin: 6px 0px;
         `}
       ></div>
-      <BlockButton format="light_mode" icon="light_mode" />
+      <BlockButton format="light_mode" icon="light_mode" description="關燈" />
     </div>
   );
 };

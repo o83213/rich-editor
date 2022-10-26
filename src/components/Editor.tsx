@@ -26,7 +26,6 @@ import Title from "./Title/Title";
 import { css, cx } from "@emotion/css";
 import Toolbar1 from "./Toolbars/Toolbar1";
 import Toolbar2 from "./Toolbars/Toolbar2";
-import Toolbar3 from "./Toolbars/Toolbar3";
 import HoveringToolbar from "./Toolbars/HoveringToolbar";
 interface HotKeyType {
   [key: string]: string;

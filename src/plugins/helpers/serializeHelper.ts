@@ -12,9 +12,9 @@ export const serialize = (node: Descendant) => {
     if (node.bold) {
       htmlString = `<strong>${htmlString}</strong>`;
     }
-    if (node.code) {
-      htmlString = `<code>${htmlString}</code>`;
-    }
+    // if (node.code) {
+    //   htmlString = `<code>${htmlString}</code>`;
+    // }
     if (node.italic) {
       htmlString = `<em>${htmlString}</em>`;
     }
@@ -46,6 +46,8 @@ export const serialize = (node: Descendant) => {
         color: #aaa;
         font-style: italic;
       ">${children}</q>`;
+    case "code":
+      return `<code${align}>${children}</code$>`;
     case "link":
       return `<a href="${escapeHtml(
         node.url
@@ -124,9 +126,9 @@ export const deserialize: any = (
     case "EM":
       nodeAttributes.italic = true;
       break;
-    case "CODE":
-      nodeAttributes.code = true;
-      break;
+    // case "CODE":
+    //   nodeAttributes.code = true;
+    //   break;
     case "DEL":
       nodeAttributes.delete = true;
       break;
@@ -170,6 +172,9 @@ export const deserialize: any = (
       return "\n";
     case "Q":
       elementAttribute = { ...elementAttribute, type: "quote" };
+      return jsx("element", elementAttribute, children);
+    case "CODE":
+      elementAttribute = { ...elementAttribute, type: "code" };
       return jsx("element", elementAttribute, children);
     case "P":
       elementAttribute = { ...elementAttribute, type: "paragraph" };

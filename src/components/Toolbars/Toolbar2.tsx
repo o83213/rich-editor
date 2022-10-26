@@ -65,10 +65,14 @@ const Toolbar2 = () => {
               border-left: 1px solid rgb(242, 241, 240);
             `}
           ></div>
-          <BlockButton format="image" icon="image" />
-          <BlockButton format="image" icon="image_search" />
-          <BlockButton format="embed" icon="html" />
-          <BlockButton format="other2" icon="horizontal_rule" />
+          <BlockButton format="image" icon="image" description="上傳圖片" />
+          <BlockButton format="image" icon="image_search" description="圖庫" />
+          <BlockButton format="embed" icon="html" description="嵌入網站" />
+          <BlockButton
+            format="other2"
+            icon="horizontal_rule"
+            description="分隔線"
+          />
         </div>
       )}
     </div>

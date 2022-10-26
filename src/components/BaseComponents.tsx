@@ -30,11 +30,11 @@ export const Button = ({
             ? buttonColor
             : reversed
             ? active
-              ? "white"
-              : "#aaa"
+              ? "rgb(255, 72, 90)"
+              : "#000"
             : active
-            ? "black"
-            : "#ccc"};
+            ? "rgb(255, 72, 90)"
+            : "#000"};
         `
       )}
     />
@@ -50,7 +50,6 @@ export const Icon = ({ className, ...props }: BaseProps) => {
         className,
         css`
           font-size: 28px;
-          color: rgb(122, 117, 116);
           vertical-align: text-bottom;
         `
       )}

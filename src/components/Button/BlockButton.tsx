@@ -5,18 +5,27 @@ import { toggleBlock } from "../../plugins/helpers/toggleBlock";
 import { unwrapLink } from "../../plugins/helpers/unwrapLink";
 import { addAnchor } from "../../plugins/helpers/insertAnchor";
 import { isUrl } from "../../util/isUrl";
-// import { isAnchorActive } from "../../plugins/helpers/isAnchorActive";
 import { isImageUrl } from "../../util/isImageUrl";
+import { css, cx } from "@emotion/css";
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 interface ButtonProps {
   format: string;
   icon: string;
   callback?: Function[];
+  description: string;
 }
-const BlockButton = ({ format, icon, callback }: ButtonProps) => {
+const BlockButton = ({ format, icon, callback, description }: ButtonProps) => {
   const editor = useSlate();
   return (
     <Button
+      className={css`
+        position: relative;
+        &:hover {
+          .tag {
+            display: block;
+          }
+        }
+      `}
       active={isBlockActive(
         editor,
         format,
@@ -89,6 +98,28 @@ const BlockButton = ({ format, icon, callback }: ButtonProps) => {
         toggleBlock(editor, format);
       }}
     >
+      <div
+        className={cx(
+          "tag",
+          css`
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /* width: 80px; */
+            padding: 6px;
+            white-space: nowrap;
+            font-size: 20px;
+            background-color: #000;
+            border-radius: 9px;
+            transform: translate(-50%, -50px);
+            color: #fff;
+            text-align: center;
+          `
+        )}
+      >
+        {description}
+      </div>
       <Icon>{icon}</Icon>
     </Button>
   );
