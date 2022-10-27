@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
-import { Range, Editor } from "slate";
+import { Range, Editor, Transforms, Location, Point } from "slate";
 import { useSlate, useFocused } from "slate-react";
-import { Menu } from "../BaseComponents";
+import { Menu, Button, Icon } from "../BaseComponents";
 import { css, cx } from "@emotion/css";
 import MarkButton from "../Button/MarkButton";
 import BlockButton from "../Button/BlockButton";
@@ -73,11 +73,31 @@ const HoveringToolbar = () => {
           border-left: 1px solid rgb(242, 241, 240);
         `}
       ></div>
-      <BlockButton
-        format="symbol"
-        icon="data_array"
-        description="插入常見符號"
-      />
+      <Button
+        onMouseDown={() => {
+          const { selection } = editor;
+          const { anchor, focus } = selection as any;
+          let firstPoint: Point = anchor;
+          let secondPoint: Point = focus;
+
+          if (anchor.path[1] > focus.path[1]) {
+            firstPoint = focus;
+            secondPoint = anchor;
+          } else if (anchor.offset > focus.offset) {
+            firstPoint = focus;
+            secondPoint = anchor;
+          }
+
+          Transforms.insertText(editor, "[", {
+            at: firstPoint,
+          });
+          Transforms.insertText(editor, "]", {
+            at: { ...secondPoint, offset: secondPoint.offset + 1 },
+          });
+        }}
+      >
+        <Icon>{"data_array"}</Icon>
+      </Button>
       <BlockButton format="link" icon="link" description="建立連結" />
     </Menu>
   );

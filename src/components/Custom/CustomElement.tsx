@@ -3,10 +3,12 @@ import ImageElement from "./ImageElement";
 import EmbedElement from "./EmbedElement";
 import VideoElement from "./VideoElement";
 import TableElement from "./TableElement";
+import HorizontalElement from "./HorizontalElement";
 declare const instgrm: any;
 const CustomElement = (props: any) => {
   const { attributes, children, element } = props;
   const style = { textAlign: element.align };
+  console.log(element.type);
   switch (element.type) {
     case "quote":
       return (
@@ -50,6 +52,8 @@ const CustomElement = (props: any) => {
       );
     case "image":
       return <ImageElement {...{ ...props, element }} />;
+    case "horizontal":
+      return <HorizontalElement {...{ ...props, element }} />;
     case "anchor":
       return (
         <p {...attributes} {...element}>

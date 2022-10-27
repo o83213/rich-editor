@@ -6,9 +6,10 @@ import { insertImage } from "./insertImage";
 import { insertIframe } from "./insertIframe";
 import { insertVideo } from "./insertVideo";
 import { insertTable } from "./insertTable";
+import { insertHorizontal } from "./insertHorizontal";
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
-export const toggleBlock = (
+export const toggleBlock = async (
   editor: Editor,
   format: string,
   url: string = "https://www.google.com.tw/",
@@ -45,7 +46,17 @@ export const toggleBlock = (
       unwrapLink(editor);
     }
   } else if (format === "image") {
-    insertImage(editor, url);
+    const hiddenInput = document.createElement("input");
+    hiddenInput.type = "file";
+    hiddenInput.click();
+    hiddenInput.addEventListener("change", async () => {
+      const curFile = hiddenInput.files!;
+      const ImageFile = curFile[0];
+      const imageUrl = URL.createObjectURL(ImageFile);
+      insertImage(editor, imageUrl);
+    });
+  } else if (format === "horizontal") {
+    insertHorizontal(editor);
   } else if (format === "video") {
     insertVideo(editor, url);
   } else if (format === "embed") {

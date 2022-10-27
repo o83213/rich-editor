@@ -66,10 +66,10 @@ const Toolbar2 = () => {
             `}
           ></div>
           <BlockButton format="image" icon="image" description="上傳圖片" />
-          <BlockButton format="image" icon="image_search" description="圖庫" />
-          <BlockButton format="embed" icon="html" description="嵌入網站" />
+          <BlockButton format="other" icon="image_search" description="圖庫" />
+          <BlockButton format="video" icon="html" description="嵌入網站" />
           <BlockButton
-            format="other2"
+            format="horizontal"
             icon="horizontal_rule"
             description="分隔線"
           />

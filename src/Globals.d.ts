@@ -23,6 +23,13 @@ export type CodeElement = {
   children: Descendant[];
 };
 
+export type HorizontalElement = {
+  type: "horizontal";
+  align?: string;
+  id?: string;
+  children: Descendant[];
+};
+
 export type NumberedListElement = {
   type: "numbered-list";
   align?: string;
@@ -129,6 +136,7 @@ type CustomElement =
   | TableCellElement
   | TitleElement
   | EmbedElement
+  | HorizontalElement
   | AnchorElement;
 
 export interface CustomText {

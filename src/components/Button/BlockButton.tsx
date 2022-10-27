@@ -7,6 +7,7 @@ import { addAnchor } from "../../plugins/helpers/insertAnchor";
 import { isUrl } from "../../util/isUrl";
 import { isImageUrl } from "../../util/isImageUrl";
 import { css, cx } from "@emotion/css";
+import Description from "../Description/Description";
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 interface ButtonProps {
   format: string;
@@ -46,15 +47,6 @@ const BlockButton = ({ format, icon, callback, description }: ButtonProps) => {
           }
           return toggleBlock(editor, format, url);
         }
-        if (format === "image") {
-          const url = window.prompt("Enter the URL of the image:");
-          if (!url) {
-            // if (!url || !isImageUrl(url)) {
-            alert("Not a valid input!");
-            return;
-          }
-          return toggleBlock(editor, format, url);
-        }
         if (format === "video") {
           const url = window.prompt("Enter the URL of the image:");
           if (!url) {
@@ -64,7 +56,6 @@ const BlockButton = ({ format, icon, callback, description }: ButtonProps) => {
           return toggleBlock(editor, format, url);
         }
         if (format === "anchor") {
-          // const anchorId = window.prompt("Enter the AnchorId of the element:");
           const anchorId = Math.random().toString();
           if (!anchorId) {
             alert("Not a valid input!");
@@ -74,7 +65,6 @@ const BlockButton = ({ format, icon, callback, description }: ButtonProps) => {
         }
         if (format === "embed") {
           const url = window.prompt("Enter the URL of the Instagram post:");
-          // if (!url || !isImageUrl(url)) {
           if (!url) {
             alert("Not a valid input!");
             return;
@@ -98,28 +88,7 @@ const BlockButton = ({ format, icon, callback, description }: ButtonProps) => {
         toggleBlock(editor, format);
       }}
     >
-      <div
-        className={cx(
-          "tag",
-          css`
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            /* width: 80px; */
-            padding: 6px;
-            white-space: nowrap;
-            font-size: 20px;
-            background-color: #000;
-            border-radius: 9px;
-            transform: translate(-50%, -50px);
-            color: #fff;
-            text-align: center;
-          `
-        )}
-      >
-        {description}
-      </div>
+      <Description description={description} />
       <Icon>{icon}</Icon>
     </Button>
   );
