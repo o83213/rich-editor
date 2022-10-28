@@ -133,10 +133,20 @@ const LionEditor = () => {
                 }
               }}
             />
-            {/* <Toolbar3 /> */}
             <HoveringToolbar />
           </div>
         </div>
+      </div>
+      <div
+        className={css`
+          position: fixed;
+          top: 20%;
+          left: 16px;
+          transform: translateY(-50%);
+          z-index: 11;
+        `}
+      >
+        <AnchorList listData={anchorList} />
       </div>
     </Slate>
   );

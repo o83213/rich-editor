@@ -11,7 +11,6 @@ interface ButtonProps extends BaseProps {
   buttonColor?: string;
   onMouseDown?: (event: React.MouseEvent) => void;
 }
-type OrNull<T> = T | null;
 export const Button = ({
   className,
   active,

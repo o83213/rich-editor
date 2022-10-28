@@ -13,9 +13,16 @@ interface ButtonProps {
   format: string;
   icon: string;
   callback?: Function[];
+  className?: string;
   description: string;
 }
-const BlockButton = ({ format, icon, callback, description }: ButtonProps) => {
+const BlockButton = ({
+  format,
+  icon,
+  callback,
+  description,
+  className,
+}: ButtonProps) => {
   const editor = useSlate();
   return (
     <Button
@@ -55,12 +62,11 @@ const BlockButton = ({ format, icon, callback, description }: ButtonProps) => {
           }
           return toggleBlock(editor, format, url);
         }
+        if (format === "sub-title") {
+          console.log("sub-title");
+        }
         if (format === "anchor") {
           const anchorId = Math.random().toString();
-          if (!anchorId) {
-            alert("Not a valid input!");
-            return;
-          }
           return addAnchor(editor, anchorId, callback![0], callback![1]);
         }
         if (format === "embed") {
@@ -74,7 +80,6 @@ const BlockButton = ({ format, icon, callback, description }: ButtonProps) => {
         if (format === "table") {
           const row = window.prompt("Enter the row of the Table:");
           const column = window.prompt("Enter the column of the Table:");
-          // if (!url || !isImageUrl(url)) {
           if (!row || !column) {
             alert("Not a valid input!");
             return;
@@ -89,7 +94,7 @@ const BlockButton = ({ format, icon, callback, description }: ButtonProps) => {
       }}
     >
       <Description description={description} />
-      <Icon>{icon}</Icon>
+      <Icon className={className}>{icon}</Icon>
     </Button>
   );
 };

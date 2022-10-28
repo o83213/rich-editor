@@ -1,6 +1,7 @@
 import { cx, css } from "@emotion/css";
 import MarkButton from "../Button/MarkButton";
 import BlockButton from "../Button/BlockButton";
+import { Button, Icon } from "../BaseComponents";
 const Toolbar1 = () => {
   return (
     <div
@@ -23,7 +24,14 @@ const Toolbar1 = () => {
         align-items: center;
       `}
     >
-      <BlockButton format="sub-title" icon="format_size" description="副標題" />
+      <BlockButton
+        className={css`
+          transform: scaleX(-1);
+        `}
+        format="sub-title"
+        icon="format_size"
+        description="副標題"
+      />
       <BlockButton format="quote" icon="format_quote" description="引言" />
       <BlockButton format="code" icon="code" description="程式碼" />
       <div

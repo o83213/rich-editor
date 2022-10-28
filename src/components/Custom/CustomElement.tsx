@@ -67,6 +67,12 @@ const CustomElement = (props: any) => {
         instgrm.Embeds.process();
       }, 100);
       return <EmbedElement {...{ ...props, element }} />;
+    case "sub-title":
+      return (
+        <h1 style={style} {...attributes} {...element}>
+          {children}
+        </h1>
+      );
     case "heading-one":
       return (
         <h1 style={style} {...attributes} {...element}>

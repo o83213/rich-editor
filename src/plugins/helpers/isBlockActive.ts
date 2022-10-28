@@ -6,17 +6,32 @@ export const isBlockActive = (
 ) => {
   const { selection } = editor;
   if (!selection) return false;
-  if (format === "anchor") {
+  // if (format === "anchor") {
+  //   const [match] = Array.from(
+  //     Editor.nodes(editor, {
+  //       at: Editor.unhangRange(editor, selection),
+  //       match: (n, path) => {
+  //         return !Editor.isEditor(n) && path.length === 1;
+  //       },
+  //     })
+  //   );
+  //   const id = (match[0] as any).id;
+  //   return !!match && id;
+  // } else
+  if (format === "sub-title") {
     const [match] = Array.from(
       Editor.nodes(editor, {
         at: Editor.unhangRange(editor, selection),
-        match: (n, path) => {
-          return !Editor.isEditor(n) && path.length === 1;
+        match: (n) => {
+          return (
+            !Editor.isEditor(n) &&
+            Element.isElement(n) &&
+            ["heading-one", "heading-two"].includes((n as any)[blockType])
+          );
         },
       })
     );
-    const id = (match[0] as any).id;
-    return !!match && id;
+    return !!match;
   } else {
     const [match] = Array.from(
       Editor.nodes(editor, {

@@ -43,7 +43,13 @@ export type BulletedListElement = {
   children: Descendant[];
 };
 
-export type HeadingElement = {
+export type TitleElement = {
+  type: "sub-title";
+  id?: string;
+  children: Descendant[];
+};
+
+export type HeadingOneElement = {
   type: "heading-one";
   align?: string;
   id?: string;
@@ -113,19 +119,13 @@ export type TableCellElement = {
   children: CustomText[];
 };
 
-export type TitleElement = {
-  type: "title";
-  id?: string;
-  children: Descendant[];
-};
-
 type CustomElement =
   | QuoteElement
   | CodeElement
   | BulletedListElement
   | NumberedListElement
   | ListItemElement
-  | HeadingElement
+  | HeadingOneElement
   | HeadingTwoElement
   | ImageElement
   | LinkElement

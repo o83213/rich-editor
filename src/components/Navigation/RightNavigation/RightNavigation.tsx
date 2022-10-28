@@ -1,31 +1,30 @@
 import { css, cx } from "@emotion/css";
+import Button from "./Button";
 
-type ButtonProps = {
-  text: string;
+const saveDraftScript = (contnet: string) => {
+  console.log(contnet);
+  console.log("draft save!");
 };
-const Button = (props: ButtonProps) => {
-  return (
-    <button
-      className={css`
-        display: inline-block;
-        text-align: center;
-        vertical-align: center;
-        cursor: pointer;
-        line-height: 1.3;
-        white-space: nowrap;
-        height: 36px;
-        font-size: 14px;
-        border: 1px solid transparent;
-        border-radius: 8px;
-        font-weight: 500 !important;
-      `}
-    >
-      {props.text}
-    </button>
-  );
+const publishHandler = (contnet: string) => {
+  console.log(contnet);
+  console.log("article publish!");
 };
 
 const RightNavigation = () => {
+  const onStoreDraft = (callback: (content: string) => void) => {
+    const content = localStorage.getItem("content");
+    if (content) {
+      callback(content);
+    }
+  };
+
+  const onPublish = (callback: (content: string) => void) => {
+    const content = localStorage.getItem("content");
+    if (content) {
+      callback(content);
+    }
+  };
+
   return (
     <div
       className={css`
@@ -41,44 +40,23 @@ const RightNavigation = () => {
         gap: 15px;
       `}
     >
-      <button
+      <Button
+        text="準備發佈"
+        onMouseDown={() => {
+          onPublish(publishHandler);
+        }}
+      />
+      <Button
+        text="儲存草稿"
         className={css`
-          display: inline-block;
-          text-align: center;
-          vertical-align: center;
-          cursor: pointer;
-          line-height: 1.3;
-          white-space: nowrap;
-          height: 36px;
-          font-size: 14px;
-          border: 1px solid transparent;
-          border-radius: 8px;
-          font-weight: 500 !important;
-          background: rgb(255, 72, 90);
-          color: rgb(255, 255, 255);
-        `}
-      >
-        準備發佈
-      </button>
-      <button
-        className={css`
-          display: inline-block;
-          text-align: center;
-          vertical-align: center;
-          cursor: pointer;
-          line-height: 1.3;
-          white-space: nowrap;
-          height: 36px;
-          font-size: 14px;
-          border: 1px solid rgb(83, 81, 80);
-          border-radius: 8px;
-          font-weight: 500 !important;
           background: transparent;
           color: rgb(20, 20, 19);
+          border: 1px solid rgb(83, 81, 80);
         `}
-      >
-        儲存草稿
-      </button>
+        onMouseDown={() => {
+          onStoreDraft(saveDraftScript);
+        }}
+      />
       <div>...</div>
       <span
         className={cx(

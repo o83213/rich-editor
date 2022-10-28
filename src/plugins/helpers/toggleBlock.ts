@@ -30,7 +30,6 @@ export const toggleBlock = async (
       !TEXT_ALIGN_TYPES.includes(format),
     split: true,
   });
-  // let newProperties: Partial<Element>;
   let newProperties: any;
 
   if (TEXT_ALIGN_TYPES.includes(format)) {
@@ -63,11 +62,39 @@ export const toggleBlock = async (
     insertIframe(editor, url);
   } else if (format === "table") {
     insertTable(editor, row, column);
+  } else if (format === "sub-title") {
+    const isHeadingOneActive = isBlockActive(
+      editor,
+      "heading-one",
+      TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
+    );
+    const isHeadingTwoActive = isBlockActive(
+      editor,
+      "heading-two",
+      TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
+    );
+    console.log("heading-one", isHeadingOneActive);
+    console.log("heading-two", isHeadingTwoActive);
+    if (!isHeadingOneActive && !isHeadingTwoActive) {
+      newProperties = {
+        type: "heading-one",
+      };
+    } else if (isHeadingOneActive && !isHeadingTwoActive) {
+      newProperties = {
+        type: "heading-two",
+      };
+    } else {
+      newProperties = {
+        type: "paragraph",
+      };
+    }
   } else {
     let format_type = format as Element["type"];
+    console.log(format_type);
     newProperties = {
       type: isActive ? "paragraph" : isList ? "list-item" : format_type,
     };
+    console.log(newProperties);
   }
   Transforms.setNodes<Element>(editor, newProperties);
 

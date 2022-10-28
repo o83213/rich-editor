@@ -9,15 +9,16 @@ const AnchorList = ({ listData }: Props) => {
   return (
     <div
       className={css`
-        position: fixed;
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        top: 0;
-        left: 0;
-        border: 0.1rem solid black;
-        width: 10rem;
-        padding: 1rem; ;
+        position: absolute;
+        top: 40px;
+        width: 186px;
+        background: rgb(255, 255, 255);
+        transition: left 0.3s linear 0s;
+        cursor: default;
+        border-radius: 0px 20px 20px 0px;
+        left: 0px;
+        opacity: 1;
+        visibility: visible;
       `}
     >
       Anchor Lists:
