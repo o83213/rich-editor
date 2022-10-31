@@ -5,6 +5,8 @@ import {
   Element as SlateElement,
   Text as SlateText,
   Descendant,
+  Editor,
+  Node,
 } from "slate";
 import { isHotkey } from "is-hotkey";
 import { withHistory } from "slate-history";
@@ -48,6 +50,13 @@ interface LeafProps {
   children: React.ReactNode;
   leaf: SlateText;
 }
+
+interface AnchorData {
+  name: string;
+  id: string;
+  type: string;
+  order: number;
+}
 const LionEditor = () => {
   const renderElement = useCallback(
     (props: ElementProps) => <CustomElement {...props} />,
@@ -71,15 +80,45 @@ const LionEditor = () => {
   useEffect(() => {
     setSlateValue(initialValue);
   }, [initialValue]);
-  const [anchorList, setAnchorList] = useState<{ name: string; id: string }[]>(
-    () => {
-      const anchor = localStorage.getItem("anchor");
-      if (anchor) {
-        return JSON.parse(anchor);
-      }
-      return [];
+  const [anchorList, setAnchorList] = useState<AnchorData[]>(() => {
+    const anchor = localStorage.getItem("anchor");
+    if (anchor) {
+      return JSON.parse(anchor);
     }
-  );
+    return [];
+  });
+  const addAnchorHandler = (data: AnchorData) => {
+    console.log(data);
+    setAnchorList((prev) => [...prev, data]);
+    console.log("anchorList:", anchorList);
+  };
+  const removeAnchorHandler = (anchorId: string) => {
+    console.log(anchorId);
+    setAnchorList((prev) =>
+      prev.filter((anchorData) => anchorData.id !== anchorId)
+    );
+    console.log("anchorList:", anchorList);
+  };
+  const updateAnchorList = (editor: Editor) => {
+    const topNodes = editor.children;
+    const nodeWithId = topNodes
+      .filter((node) => {
+        return "id" in node;
+      })
+      .map((node: any, idx) => {
+        const name = Node.string(node);
+        return {
+          id: node.id,
+          order: idx,
+          name,
+          type: node.type,
+        };
+      });
+    console.log(nodeWithId);
+    setAnchorList(nodeWithId);
+    const anchor = JSON.stringify(nodeWithId);
+    localStorage.setItem("anchor", anchor);
+  };
   return (
     <Slate
       editor={editor}
@@ -90,9 +129,8 @@ const LionEditor = () => {
         );
         if (isAstChange) {
           const content = JSON.stringify(value);
-          const anchor = JSON.stringify(anchorList);
+          updateAnchorList(editor);
           localStorage.setItem("content", content);
-          localStorage.setItem("anchor", anchor);
           setSlateValue(value);
         }
       }}
@@ -108,7 +146,7 @@ const LionEditor = () => {
         <NavigationWrapper />
         <div className="container2">
           <Title />
-          <Toolbar1 />
+          <Toolbar1 callback={[addAnchorHandler, removeAnchorHandler]} />
           <Toolbar2 />
           <div
             className={css`

@@ -64,11 +64,13 @@ const BlockButton = ({
         }
         if (format === "sub-title") {
           console.log("sub-title");
+          console.log(callback);
+          return toggleBlock(editor, format, "", callback);
         }
-        if (format === "anchor") {
-          const anchorId = Math.random().toString();
-          return addAnchor(editor, anchorId, callback![0], callback![1]);
-        }
+        // if (format === "anchor") {
+        //   const anchorId = Math.random().toString();
+        //   return addAnchor(editor, anchorId, callback![0], callback![1]);
+        // }
         if (format === "embed") {
           const url = window.prompt("Enter the URL of the Instagram post:");
           if (!url) {
@@ -77,19 +79,19 @@ const BlockButton = ({
           }
           return toggleBlock(editor, format, url);
         }
-        if (format === "table") {
-          const row = window.prompt("Enter the row of the Table:");
-          const column = window.prompt("Enter the column of the Table:");
-          if (!row || !column) {
-            alert("Not a valid input!");
-            return;
-          }
-          if (+row <= 1 || +column <= 1) {
-            alert("Row and Column must greater than 1!");
-            return;
-          }
-          return toggleBlock(editor, format, "", +row, +column);
-        }
+        // if (format === "table") {
+        //   const row = window.prompt("Enter the row of the Table:");
+        //   const column = window.prompt("Enter the column of the Table:");
+        //   if (!row || !column) {
+        //     alert("Not a valid input!");
+        //     return;
+        //   }
+        //   if (+row <= 1 || +column <= 1) {
+        //     alert("Row and Column must greater than 1!");
+        //     return;
+        //   }
+        //   return toggleBlock(editor, format, "", +row, +column);
+        // }
         toggleBlock(editor, format);
       }}
     >
