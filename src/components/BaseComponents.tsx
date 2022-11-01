@@ -24,6 +24,7 @@ export const Button = ({
       className={cx(
         className,
         css`
+          display: block;
           cursor: pointer;
           color: ${buttonColor
             ? buttonColor
@@ -46,11 +47,11 @@ export const Icon = ({ className, ...props }: BaseProps) => {
       {...props}
       className={cx(
         "material-icons",
-        className,
         css`
           font-size: 28px;
           vertical-align: text-bottom;
-        `
+        `,
+        className
       )}
     />
   );

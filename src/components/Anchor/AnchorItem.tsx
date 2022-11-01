@@ -19,11 +19,12 @@ const scrollToItem = (targetId: string) => {
 
 const AnchorItem = ({ targetId, name, type }: Props) => {
   return (
-    <div
+    <li
       // href={`#${targetId}`}
       className={css`
         border-radius: 9px;
         transition: all 0.3s;
+        list-style: none;
         padding: 5px;
         padding-left: ${type === "heading-one" ? "5px" : "15px  "};
         text-decoration: none;
@@ -32,17 +33,21 @@ const AnchorItem = ({ targetId, name, type }: Props) => {
         font-weight: bold;
         cursor: pointer;
         color: ${type === "heading-one" ? "#000" : "rgb(83, 81, 80)"};
-        /* &:hover {
-          background-color: #22b8cf;
-          color: #fff;
-        } */
       `}
       onClick={() => {
         scrollToItem(targetId);
       }}
     >
-      <div>{name}</div>
-    </div>
+      <div
+        className={css`
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        `}
+      >
+        {name}
+      </div>
+    </li>
   );
 };
 export default AnchorItem;
