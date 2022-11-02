@@ -7,8 +7,11 @@ import { insertIframe } from "./insertIframe";
 import { insertVideo } from "./insertVideo";
 import { insertTable } from "./insertTable";
 import { insertHorizontal } from "./insertHorizontal";
+import { insertUnsplash } from "./insertUnsplash";
+import UnsplashModal from "../../util/UnsplashModal";
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
+
 export const toggleBlock = async (
   editor: Editor,
   format: string,
@@ -52,10 +55,14 @@ export const toggleBlock = async (
       const curFile = hiddenInput.files!;
       const ImageFile = curFile[0];
       const imageUrl = URL.createObjectURL(ImageFile);
+      console.log("ImageFile", ImageFile);
+      console.log("imageUrl", imageUrl);
       insertImage(editor, imageUrl);
     });
   } else if (format === "horizontal") {
     insertHorizontal(editor);
+  } else if (format === "unsplash") {
+    // insertUnsplash(editor, url);
   } else if (format === "video") {
     insertVideo(editor, url);
   } else if (format === "embed") {
