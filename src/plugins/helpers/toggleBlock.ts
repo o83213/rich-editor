@@ -49,14 +49,21 @@ export const toggleBlock = async (
     }
   } else if (format === "image") {
     const hiddenInput = document.createElement("input");
+    const fileReader = new FileReader();
     hiddenInput.type = "file";
-    hiddenInput.click();
+
     hiddenInput.addEventListener("change", async () => {
       const curFile = hiddenInput.files!;
       const ImageFile = curFile[0];
-      const imageUrl = URL.createObjectURL(ImageFile);
-      insertImage(editor, imageUrl);
+      fileReader.readAsDataURL(ImageFile);
     });
+
+    fileReader.addEventListener("load", (event) => {
+      const base64DataUrl = event.target?.result as string;
+      insertImage(editor, base64DataUrl);
+    });
+
+    hiddenInput.click();
   } else if (format === "horizontal") {
     insertHorizontal(editor);
   } else if (format === "video") {
