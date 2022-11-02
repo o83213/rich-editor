@@ -1,14 +1,15 @@
 import { useSlate } from "slate-react";
+import { css, cx } from "@emotion/css";
+
 import { Button, Icon } from "../BaseComponents";
 import { isBlockActive } from "../../plugins/helpers/isBlockActive";
 import { toggleBlock } from "../../plugins/helpers/toggleBlock";
 import { unwrapLink } from "../../plugins/helpers/unwrapLink";
-import { addAnchor } from "../../plugins/helpers/insertAnchor";
 import { isUrl } from "../../util/isUrl";
-import { isImageUrl } from "../../util/isImageUrl";
-import { css, cx } from "@emotion/css";
 import Description from "../Description/Description";
+
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
+
 interface ButtonProps {
   format: string;
   icon: string;
@@ -16,6 +17,7 @@ interface ButtonProps {
   className?: string;
   description: string;
 }
+
 const BlockButton = ({
   format,
   icon,
@@ -24,6 +26,7 @@ const BlockButton = ({
   className,
 }: ButtonProps) => {
   const editor = useSlate();
+
   return (
     <Button
       className={css`
@@ -41,11 +44,13 @@ const BlockButton = ({
       )}
       onMouseDown={(event: React.MouseEvent) => {
         event.preventDefault();
+
         if (icon === "link_off") {
           if (isBlockActive(editor, "link")) {
             return unwrapLink(editor);
           }
         }
+
         if (format === "link") {
           const url = window.prompt("Enter the URL of the link:");
           if (!url || !isUrl(url)) {
@@ -54,6 +59,7 @@ const BlockButton = ({
           }
           return toggleBlock(editor, format, url);
         }
+
         if (format === "video") {
           const url = window.prompt("Enter the URL of the image:");
           if (!url) {
@@ -62,15 +68,11 @@ const BlockButton = ({
           }
           return toggleBlock(editor, format, url);
         }
+
         if (format === "sub-title") {
-          console.log("sub-title");
-          console.log(callback);
           return toggleBlock(editor, format, "", callback);
         }
-        // if (format === "anchor") {
-        //   const anchorId = Math.random().toString();
-        //   return addAnchor(editor, anchorId, callback![0], callback![1]);
-        // }
+
         if (format === "embed") {
           const url = window.prompt("Enter the URL of the Instagram post:");
           if (!url) {
@@ -79,19 +81,6 @@ const BlockButton = ({
           }
           return toggleBlock(editor, format, url);
         }
-        // if (format === "table") {
-        //   const row = window.prompt("Enter the row of the Table:");
-        //   const column = window.prompt("Enter the column of the Table:");
-        //   if (!row || !column) {
-        //     alert("Not a valid input!");
-        //     return;
-        //   }
-        //   if (+row <= 1 || +column <= 1) {
-        //     alert("Row and Column must greater than 1!");
-        //     return;
-        //   }
-        //   return toggleBlock(editor, format, "", +row, +column);
-        // }
         toggleBlock(editor, format);
       }}
     >

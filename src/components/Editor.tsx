@@ -8,36 +8,19 @@ import {
   Editor,
   Node,
 } from "slate";
-import { isHotkey } from "is-hotkey";
 import { withHistory } from "slate-history";
+import { css } from "@emotion/css";
 
-import { Toolbar } from "./BaseComponents";
 import { defaultValue } from "../data/defaultValue";
-import { toggleMark } from "../plugins/helpers/toggleMark";
 import { withPlugins } from "../plugins/withPlugins";
 import CustomElement from "./Custom/CustomElement";
 import CustomLeaf from "./Custom/CustomLeaf";
-
-import BlockButton from "./Button/BlockButton";
-import MarkButton from "./Button/MarkButton";
-import StateButton from "./Button/ColorButton";
-import { serialize, deserialize } from "../plugins/helpers/serializeHelper";
 import AnchorList from "./Anchor/AnchorList";
 import NavigationWrapper from "./Navigation/NavigationWrapper";
 import Title from "./Title/Title";
-import { css, cx } from "@emotion/css";
 import Toolbar1 from "./Toolbars/Toolbar1";
 import Toolbar2 from "./Toolbars/Toolbar2";
 import HoveringToolbar from "./Toolbars/HoveringToolbar";
-interface HotKeyType {
-  [key: string]: string;
-}
-const HOTKEYS: HotKeyType = {
-  "mod+b": "bold",
-  "mod+i": "italic",
-  "mod+u": "underline",
-  "mod+`": "code",
-};
 
 interface ElementProps {
   attributes: any;
@@ -57,6 +40,7 @@ interface AnchorData {
   type: string;
   order: number;
 }
+
 const LionEditor = () => {
   const renderElement = useCallback(
     (props: ElementProps) => <CustomElement {...props} />,
@@ -76,10 +60,9 @@ const LionEditor = () => {
       : defaultValue;
     return data;
   }, []);
+
   const [slateValue, setSlateValue] = useState<Descendant[]>([]);
-  useEffect(() => {
-    setSlateValue(initialValue);
-  }, [initialValue]);
+
   const [anchorList, setAnchorList] = useState<AnchorData[]>(() => {
     const anchor = localStorage.getItem("anchor");
     if (anchor) {
@@ -87,11 +70,17 @@ const LionEditor = () => {
     }
     return [];
   });
+
+  useEffect(() => {
+    setSlateValue(initialValue);
+  }, [initialValue]);
+
   const addAnchorHandler = (data: AnchorData) => {
     console.log(data);
     setAnchorList((prev) => [...prev, data]);
     console.log("anchorList:", anchorList);
   };
+
   const removeAnchorHandler = (anchorId: string) => {
     console.log(anchorId);
     setAnchorList((prev) =>
@@ -99,6 +88,7 @@ const LionEditor = () => {
     );
     console.log("anchorList:", anchorList);
   };
+
   const updateAnchorList = (editor: Editor) => {
     const topNodes = editor.children;
     const nodeWithId = topNodes
@@ -114,11 +104,11 @@ const LionEditor = () => {
           type: node.type,
         };
       });
-    console.log(nodeWithId);
     setAnchorList(nodeWithId);
     const anchor = JSON.stringify(nodeWithId);
     localStorage.setItem("anchor", anchor);
   };
+
   return (
     <Slate
       editor={editor}
@@ -144,37 +134,27 @@ const LionEditor = () => {
         `}
       >
         <NavigationWrapper />
-        <div className="container2">
-          <Title />
-          <Toolbar1 callback={[addAnchorHandler, removeAnchorHandler]} />
-          <Toolbar2 />
-          <div
-            className={css`
-              width: 100%;
-              max-width: 740px;
-              margin: 0 auto;
-            `}
-          >
-            <Editable
-              renderElement={renderElement}
-              renderLeaf={renderLeaf}
-              placeholder="開始寫作吧!"
-              spellCheck
-              autoFocus
-              onKeyDown={(event) => {
-                for (const hotkey in HOTKEYS) {
-                  if (isHotkey(hotkey, event)) {
-                    event.preventDefault();
-                    const mark = HOTKEYS[hotkey];
-                    toggleMark(editor, mark);
-                  }
-                }
-              }}
-            />
-            <HoveringToolbar />
-          </div>
+        <Title />
+        <Toolbar1 callback={[addAnchorHandler, removeAnchorHandler]} />
+        <Toolbar2 />
+        <div
+          className={css`
+            width: 100%;
+            max-width: 740px;
+            margin: 0 auto;
+          `}
+        >
+          <Editable
+            renderElement={renderElement}
+            renderLeaf={renderLeaf}
+            placeholder="開始寫作吧!"
+            spellCheck
+            autoFocus
+          />
+          <HoveringToolbar />
         </div>
       </div>
+      
       <div
         className={css`
           position: fixed;

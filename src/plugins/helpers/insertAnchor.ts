@@ -42,47 +42,11 @@ export const addAnchor = (props: AddAnchorProps) => {
   console.log(selection.focus.path);
   const order = selection.anchor.path[0];
   if (type === "heading-one") {
-    // console.log({ id, type, order: selection.anchor.path[0] });
     addToList({ id, type, order, name: type + "-" + order });
   } else if (type === "heading-two") {
-    // console.log({ id, type, order: selection.anchor.path[0] });
     removeFromList(originalId);
     addToList({ id, type, order, name: type + "-" + order });
   } else {
     removeFromList(originalId);
   }
-  // if (anchorId) {
-  //   removeFromList(anchorId);
-  //   Transforms.setNodes(
-  //     editor,
-  //     { id: undefined },
-  //     {
-  //       at: Editor.unhangRange(editor, selection),
-  //       match: (n, path) => {
-  //         const matching = path.length === 1;
-  //         if (matching) {
-  //           console.log(n);
-  //         }
-  //         return !Editor.isEditor(n) && path.length === 1;
-  //       },
-  //     }
-  //   );
-  //   return false;
-  // } else {
-  //   Transforms.setNodes(
-  //     editor,
-  //     { id: id },
-  //     {
-  //       at: Editor.unhangRange(editor, selection),
-  //       match: (n, path) => {
-  //         const matching = path.length === 1;
-  //         if (matching) {
-  //           console.log(n);
-  //           addToList((n as any).type + ": " + id, id);
-  //         }
-  //         return !Editor.isEditor(n) && path.length === 1;
-  //       },
-  //     }
-  //   );
-  // }
 };

@@ -1,26 +1,15 @@
 import { css } from "@emotion/css";
+import { scrollToElement } from "../../plugins/helpers/scrollToElement";
+
 type Props = {
   name: string;
   targetId: string;
   type: string;
 };
 
-const scrollToItem = (targetId: string) => {
-  const targetElement = document.getElementById(targetId);
-  if (targetElement) {
-    const rect = targetElement.getBoundingClientRect();
-    window.scrollTo({
-      behavior: "smooth",
-      top: rect.top + window.scrollY - 100,
-      left: 0,
-    });
-  }
-};
-
 const AnchorItem = ({ targetId, name, type }: Props) => {
   return (
     <li
-      // href={`#${targetId}`}
       className={css`
         border-radius: 9px;
         transition: all 0.3s;
@@ -35,7 +24,7 @@ const AnchorItem = ({ targetId, name, type }: Props) => {
         color: ${type === "heading-one" ? "#000" : "rgb(83, 81, 80)"};
       `}
       onClick={() => {
-        scrollToItem(targetId);
+        scrollToElement(targetId);
       }}
     >
       <div

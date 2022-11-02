@@ -1,4 +1,3 @@
-import { Button, Icon } from "../BaseComponents";
 import { Transforms } from "slate";
 import {
   useSlateStatic,
@@ -7,6 +6,7 @@ import {
   useFocused,
 } from "slate-react";
 import { css } from "@emotion/css";
+import { Button, Icon } from "../BaseComponents";
 
 const HorizontalElement = (props: any) => {
   const { attributes, children, element } = props;

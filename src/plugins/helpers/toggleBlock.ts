@@ -118,12 +118,10 @@ export const toggleBlock = async (
     }
   } else {
     let format_type = format as Element["type"];
-    console.log(format_type);
     newProperties = {
       type: isActive ? "paragraph" : isList ? "list-item" : format_type,
       id: null,
     };
-    console.log(newProperties);
   }
   Transforms.setNodes<Element>(editor, newProperties);
 

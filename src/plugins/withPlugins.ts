@@ -70,7 +70,6 @@ export const withPlugins = (editor: Editor) => {
     if (selection) {
       const [table] = Editor.nodes(editor, {
         match: (n: any) => {
-          console.log(n);
           return (
             !Editor.isEditor(n) && Element.isElement(n) && n.type === "table"
           );
@@ -78,7 +77,6 @@ export const withPlugins = (editor: Editor) => {
       });
       const [subTitle] = Editor.nodes(editor, {
         match: (n: any) => {
-          console.log(n.type);
           return (
             !Editor.isEditor(n) &&
             Element.isElement(n) &&
@@ -90,8 +88,6 @@ export const withPlugins = (editor: Editor) => {
         return;
       }
       if (subTitle) {
-        console.log("is-subTitle");
-        console.log(subTitle);
         const newNode = {
           type: (subTitle[0] as any).type,
           children: [{ text: "" }],

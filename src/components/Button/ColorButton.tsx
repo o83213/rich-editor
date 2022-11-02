@@ -1,9 +1,10 @@
-import { Button, Icon } from "../BaseComponents";
 import React, { useState, useEffect } from "react";
-import { toggleMark } from "../../plugins/helpers/toggleMark";
 import { useSlate } from "slate-react";
-import ColorPalte from "./ColorPlate";
 import { css } from "@emotion/css";
+import { Button, Icon } from "../BaseComponents";
+import { toggleMark } from "../../plugins/helpers/toggleMark";
+import ColorPalte from "./ColorPlate";
+
 const StateButton = (props: any) => {
   const { format, icon, defaultState } = props;
   const [color, setColor] = useState<string>();

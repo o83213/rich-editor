@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import AnchorItem from "./AnchorItem";
 import { cx, css } from "@emotion/css";
 import { Button, Icon } from "../BaseComponents";
@@ -35,21 +35,17 @@ const AnchorList = ({ listData }: Props) => {
             pointer-events: ${showAnchorList ? "auto" : "none"};
             visibility: ${showAnchorList ? "visible" : "hidden"};
             padding-inline-start: 0px;
-            height: 200px;
+            max-height: 200px;
             width: 160px;
             overflow-y: scroll;
-            /* width */
+
             ::-webkit-scrollbar {
               width: 5px;
               height: 0px;
             }
-
-            /* Track */
             ::-webkit-scrollbar-track {
               background: #f1f1f1;
             }
-
-            /* Handle */
             ::-webkit-scrollbar-thumb {
               background: rgba(0, 0, 0, 0.1);
             }
@@ -64,7 +60,6 @@ const AnchorList = ({ listData }: Props) => {
               return (
                 <AnchorItem key={id} name={name} targetId={id} type={type} />
               );
-              // return <div>{name}</div>;
             })}
         </ul>
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { css, cx } from "@emotion/css";
 import BlockButton from "../Button/BlockButton";
+import VerticalLine from "./VerticalLine";
 const Toolbar2 = () => {
   const [isActive, setIsActive] = useState(false);
   return (
@@ -58,13 +59,7 @@ const Toolbar2 = () => {
             gap: 12px;
           `}
         >
-          <div
-            className={css`
-              height: 85%;
-              margin-left: 20px;
-              border-left: 1px solid rgb(242, 241, 240);
-            `}
-          ></div>
+          <VerticalLine />
           <BlockButton format="image" icon="image" description="上傳圖片" />
           <BlockButton format="other" icon="image_search" description="圖庫" />
           <BlockButton format="video" icon="html" description="嵌入網站" />
