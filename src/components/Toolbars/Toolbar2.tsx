@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import { css, cx } from "@emotion/css";
 import BlockButton from "../Button/BlockButton";
 import VerticalLine from "./VerticalLine";
-const Toolbar2 = () => {
+const Toolbar2 = (props: {
+  setIsUnsplash: any;
+  isUnsplash: boolean;
+  selectUnsplashImage: string;
+}) => {
+  const { setIsUnsplash, isUnsplash, selectUnsplashImage } = props;
   const [isActive, setIsActive] = useState(false);
+
   return (
     <div
       className={css`
@@ -61,7 +67,14 @@ const Toolbar2 = () => {
         >
           <VerticalLine />
           <BlockButton format="image" icon="image" description="上傳圖片" />
-          <BlockButton format="other" icon="image_search" description="圖庫" />
+          <BlockButton
+            format="unsplash"
+            icon="image_search"
+            description="圖庫"
+            setIsUnsplash={setIsUnsplash}
+            isUnsplash={isUnsplash}
+            selectUnsplashImage={selectUnsplashImage}
+          />
           <BlockButton format="video" icon="html" description="嵌入網站" />
           <BlockButton
             format="horizontal"

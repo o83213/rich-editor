@@ -4,6 +4,7 @@ import EmbedElement from "./EmbedElement";
 import VideoElement from "./VideoElement";
 import TableElement from "./TableElement";
 import HorizontalElement from "./HorizontalElement";
+import UnsplashElement from "./UnsplashElement";
 declare const instgrm: any;
 const CustomElement = (props: any) => {
   const { attributes, children, element } = props;
@@ -53,6 +54,8 @@ const CustomElement = (props: any) => {
       return <ImageElement {...{ ...props, element }} />;
     case "horizontal":
       return <HorizontalElement {...{ ...props, element }} />;
+    case "unsplash":
+      return <UnsplashElement {...{ ...props, element }} />;
     case "anchor":
       return (
         <p {...attributes} {...element}>
