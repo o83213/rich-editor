@@ -10,7 +10,8 @@ import { insertHorizontal } from "./insertHorizontal";
 import { addAnchor } from "../helpers/insertAnchor";
 
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
-const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
+// const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
+const TEXT_ALIGN_TYPES = ["center", "right"];
 export const toggleBlock = async (
   editor: Editor,
   format: string,
@@ -34,10 +35,38 @@ export const toggleBlock = async (
     split: true,
   });
   let newProperties: any;
-  console.log(format);
   if (TEXT_ALIGN_TYPES.includes(format)) {
+    const { selection } = editor;
+
+    const [match] = Array.from(
+      Editor.nodes(editor, {
+        at: Editor.unhangRange(editor, selection!),
+        match: (n) => {
+          return (
+            !Editor.isEditor(n) &&
+            Element.isElement(n) &&
+            TEXT_ALIGN_TYPES.includes((n as any)["align"])
+          );
+        },
+      })
+    );
+
+    let newAlign;
+
+    if (!match) {
+      newAlign = TEXT_ALIGN_TYPES[0];
+    } else {
+      const oldAlign = (match[0] as any).align;
+
+      let oldAlignIdx = TEXT_ALIGN_TYPES.findIndex((el) => el === oldAlign);
+
+      newAlign =
+        oldAlignIdx + 1 !== TEXT_ALIGN_TYPES.length
+          ? TEXT_ALIGN_TYPES[oldAlignIdx + 1]
+          : undefined;
+    }
     newProperties = {
-      align: isActive ? undefined : format,
+      align: newAlign,
     };
   } else if (format === "link") {
     if (editor.selection) {
@@ -73,7 +102,6 @@ export const toggleBlock = async (
   } else if (format === "table") {
     insertTable(editor, row, column);
   } else if (format === "sub-title") {
-    console.log("add new subTitle");
     const isHeadingOneActive = isBlockActive(
       editor,
       "heading-one",

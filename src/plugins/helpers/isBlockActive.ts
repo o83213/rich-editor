@@ -1,4 +1,5 @@
 import { Editor, Element } from "slate";
+
 export const isBlockActive = (
   editor: Editor,
   format: string,
@@ -26,6 +27,10 @@ export const isBlockActive = (
       Editor.nodes(editor, {
         at: Editor.unhangRange(editor, selection),
         match: (n) => {
+          if (blockType === "align") {
+            return false;
+          }
+
           return (
             !Editor.isEditor(n) &&
             Element.isElement(n) &&
