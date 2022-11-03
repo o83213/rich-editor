@@ -1,16 +1,19 @@
-import React, { Ref, forwardRef, PropsWithChildren } from "react";
+import React from "react";
 import { cx, css } from "@emotion/css";
+
 interface BaseProps {
   children: React.ReactNode;
   className?: string;
   [key: string]: unknown;
 }
+
 interface ButtonProps extends BaseProps {
   active?: boolean;
   reversed?: boolean;
   buttonColor?: string;
   onMouseDown?: (event: React.MouseEvent) => void;
 }
+
 export const Button = ({
   className,
   active,
@@ -24,16 +27,9 @@ export const Button = ({
       className={cx(
         className,
         css`
+          display: block;
           cursor: pointer;
-          color: ${buttonColor
-            ? buttonColor
-            : reversed
-            ? active
-              ? "rgb(255, 72, 90)"
-              : "#000"
-            : active
-            ? "rgb(255, 72, 90)"
-            : "#000"};
+          color: ${active ? "rgb(255, 72, 90)" : "#000"};
         `
       )}
     />
@@ -46,11 +42,11 @@ export const Icon = ({ className, ...props }: BaseProps) => {
       {...props}
       className={cx(
         "material-icons",
-        className,
         css`
           font-size: 28px;
           vertical-align: text-bottom;
-        `
+        `,
+        className
       )}
     />
   );

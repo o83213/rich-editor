@@ -1,12 +1,9 @@
-import { Button, Icon } from "../BaseComponents";
 import { Transforms } from "slate";
-import {
-  useSlateStatic,
-  ReactEditor,
-  useSelected,
-  useFocused,
-} from "slate-react";
+import { useSlateStatic, ReactEditor } from "slate-react";
 import { css } from "@emotion/css";
+
+import { Button, Icon } from "../BaseComponents";
+
 const VideoElement = (props: any) => {
   const { attributes, children, element } = props;
   const editor = useSlateStatic();

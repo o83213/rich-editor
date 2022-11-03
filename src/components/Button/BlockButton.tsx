@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import { useSlate } from "slate-react";
+import { css, cx } from "@emotion/css";
+
 import { Button, Icon } from "../BaseComponents";
 import { isBlockActive } from "../../plugins/helpers/isBlockActive";
 import { toggleBlock } from "../../plugins/helpers/toggleBlock";
 import { unwrapLink } from "../../plugins/helpers/unwrapLink";
-import { addAnchor } from "../../plugins/helpers/insertAnchor";
 import { isUrl } from "../../util/isUrl";
-import { isImageUrl } from "../../util/isImageUrl";
-import { css, cx } from "@emotion/css";
 import Description from "../Description/Description";
 import UnsplashModal from "../../util/UnsplashModal";
 import { insertUnsplash } from "../../plugins/helpers/insertUnsplash";
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
+
 interface ButtonProps {
   format: string;
   icon: string;
@@ -52,11 +52,13 @@ const BlockButton = ({
       )}
       onMouseDown={async (event: React.MouseEvent) => {
         event.preventDefault();
+
         if (icon === "link_off") {
           if (isBlockActive(editor, "link")) {
             return unwrapLink(editor);
           }
         }
+
         if (format === "link") {
           const url = window.prompt("Enter the URL of the link:");
           if (!url || !isUrl(url)) {
@@ -81,13 +83,11 @@ const BlockButton = ({
           }
           return toggleBlock(editor, format, url);
         }
+
         if (format === "sub-title") {
-          console.log("sub-title");
+          return toggleBlock(editor, format, "", callback);
         }
-        if (format === "anchor") {
-          const anchorId = Math.random().toString();
-          return addAnchor(editor, anchorId, callback![0], callback![1]);
-        }
+
         if (format === "embed") {
           const url = window.prompt("Enter the URL of the Instagram post:");
           if (!url) {
@@ -107,7 +107,7 @@ const BlockButton = ({
             alert("Row and Column must greater than 1!");
             return;
           }
-          return toggleBlock(editor, format, "", +row, +column);
+          return toggleBlock(editor, format, "", callback, +row, +column);
         }
         toggleBlock(editor, format); // 插入圖片會走這裡
       }}

@@ -1,8 +1,13 @@
 import { cx, css } from "@emotion/css";
 import MarkButton from "../Button/MarkButton";
 import BlockButton from "../Button/BlockButton";
-import { Button, Icon } from "../BaseComponents";
-const Toolbar1 = () => {
+import HorizontalLine from "./HorizontalLine";
+interface ToolbarProps {
+  callback?: Function[];
+}
+
+const Toolbar1 = (props: ToolbarProps) => {
+  const { callback } = props;
   return (
     <div
       className={css`
@@ -31,16 +36,11 @@ const Toolbar1 = () => {
         format="sub-title"
         icon="format_size"
         description="副標題"
+        callback={callback}
       />
       <BlockButton format="quote" icon="format_quote" description="引言" />
       <BlockButton format="code" icon="code" description="程式碼" />
-      <div
-        className={css`
-          width: 85%;
-          border-top: 1px solid rgb(242, 241, 240);
-          margin: 6px 0px;
-        `}
-      ></div>
+      <HorizontalLine />
       <BlockButton
         format="center"
         icon="format_align_center"
@@ -56,13 +56,7 @@ const Toolbar1 = () => {
         icon="format_list_bulleted"
         description="數字項目符號"
       />
-      <div
-        className={css`
-          width: 85%;
-          border-top: 1px solid rgb(242, 241, 240);
-          margin: 6px 0px;
-        `}
-      ></div>
+      <HorizontalLine />
       <BlockButton format="light_mode" icon="light_mode" description="關燈" />
     </div>
   );

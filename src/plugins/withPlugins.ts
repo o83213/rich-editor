@@ -1,7 +1,13 @@
 import { Editor, Range, Element, Point } from "slate";
 export const withPlugins = (editor: Editor) => {
-  const { isInline, isVoid, deleteForward, deleteBackward, insertBreak } =
-    editor;
+  const {
+    isInline,
+    isVoid,
+    deleteForward,
+    deleteBackward,
+    insertBreak,
+    insertNode,
+  } = editor;
 
   editor.isInline = (element) =>
     ["link", "button"].includes(element.type) || isInline(element);
@@ -63,11 +69,31 @@ export const withPlugins = (editor: Editor) => {
 
     if (selection) {
       const [table] = Editor.nodes(editor, {
-        match: (n) =>
-          !Editor.isEditor(n) && Element.isElement(n) && n.type === "table",
+        match: (n: any) => {
+          return (
+            !Editor.isEditor(n) && Element.isElement(n) && n.type === "table"
+          );
+        },
       });
-
+      const [subTitle] = Editor.nodes(editor, {
+        match: (n: any) => {
+          return (
+            !Editor.isEditor(n) &&
+            Element.isElement(n) &&
+            ["heading-one", "heading-two"].includes(n.type)
+          );
+        },
+      });
       if (table) {
+        return;
+      }
+      if (subTitle) {
+        const newNode = {
+          type: (subTitle[0] as any).type,
+          children: [{ text: "" }],
+          id: Math.random().toString(),
+        };
+        insertNode(newNode);
         return;
       }
     }

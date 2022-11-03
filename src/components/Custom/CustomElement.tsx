@@ -9,7 +9,6 @@ declare const instgrm: any;
 const CustomElement = (props: any) => {
   const { attributes, children, element } = props;
   const style = { textAlign: element.align };
-  console.log(element.type);
   switch (element.type) {
     case "quote":
       return (

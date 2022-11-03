@@ -1,29 +1,42 @@
 import { css } from "@emotion/css";
+import { scrollToElement } from "../../plugins/helpers/scrollToElement";
+
 type Props = {
   name: string;
   targetId: string;
+  type: string;
 };
 
-const AnchorItem = ({ targetId, name }: Props) => {
+const AnchorItem = ({ targetId, name, type }: Props) => {
   return (
-    <a
-      href={`#${targetId}`}
+    <li
       className={css`
         border-radius: 9px;
         transition: all 0.3s;
+        list-style: none;
         padding: 5px;
+        padding-left: ${type === "heading-one" ? "5px" : "15px  "};
         text-decoration: none;
-        color: #000;
-        font-size: 16px;
+        font-size: 20px;
+        line-height: 24px;
         font-weight: bold;
-        &:hover {
-          background-color: #22b8cf;
-          color: #fff;
-        }
+        cursor: pointer;
+        color: ${type === "heading-one" ? "#000" : "rgb(83, 81, 80)"};
       `}
+      onClick={() => {
+        scrollToElement(targetId);
+      }}
     >
-      <div>{name}</div>
-    </a>
+      <div
+        className={css`
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        `}
+      >
+        {name}
+      </div>
+    </li>
   );
 };
 export default AnchorItem;

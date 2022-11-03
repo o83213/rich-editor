@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { css, cx } from "@emotion/css";
 import BlockButton from "../Button/BlockButton";
+import VerticalLine from "./VerticalLine";
 const Toolbar2 = (props: {
   setIsUnsplash: any;
   isUnsplash: boolean;
@@ -64,13 +65,7 @@ const Toolbar2 = (props: {
             gap: 12px;
           `}
         >
-          <div
-            className={css`
-              height: 85%;
-              margin-left: 20px;
-              border-left: 1px solid rgb(242, 241, 240);
-            `}
-          ></div>
+          <VerticalLine />
           <BlockButton format="image" icon="image" description="上傳圖片" />
           <BlockButton
             format="unsplash"

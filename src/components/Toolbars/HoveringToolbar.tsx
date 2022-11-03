@@ -1,10 +1,11 @@
 import React, { useRef, useEffect } from "react";
-import { Range, Editor, Transforms, Location, Point } from "slate";
+import { Range, Editor, Transforms, Point } from "slate";
 import { useSlate, useFocused } from "slate-react";
 import { Menu, Button, Icon } from "../BaseComponents";
-import { css, cx } from "@emotion/css";
+import { css } from "@emotion/css";
 import MarkButton from "../Button/MarkButton";
 import BlockButton from "../Button/BlockButton";
+import VerticalLine from "./VerticalLine";
 const HoveringToolbar = () => {
   const ref = useRef<HTMLDivElement | null>();
   const editor = useSlate();
@@ -67,12 +68,7 @@ const HoveringToolbar = () => {
         icon="format_underlined"
         description="底線"
       />
-      <div
-        className={css`
-          height: 85%;
-          border-left: 1px solid rgb(242, 241, 240);
-        `}
-      ></div>
+      <VerticalLine />
       <Button
         onMouseDown={() => {
           const { selection } = editor;
