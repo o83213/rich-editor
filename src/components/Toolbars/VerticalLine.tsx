@@ -1,13 +1,13 @@
 import { css } from "@emotion/css";
 const VerticalLine = () => {
   return (
-    <div
+    <span
       className={css`
-        height: 85%;
+        height: 90%;
         margin-left: 20px;
-        border-left: 1px solid #ccc;
+        border-left: 1.5px solid #ccc;
       `}
-    ></div>
+    ></span>
   );
 };
 

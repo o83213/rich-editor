@@ -22,6 +22,11 @@ import Toolbar1 from "./Toolbars/Toolbar1";
 import Toolbar2 from "./Toolbars/Toolbar2";
 import HoveringToolbar from "./Toolbars/HoveringToolbar";
 
+interface EditorProps {
+  onSaveContent: (content: Descendant[]) => void;
+  DefaultContent?: Descendant[];
+}
+
 interface ElementProps {
   attributes: any;
   children: React.ReactNode;
@@ -41,7 +46,7 @@ interface AnchorData {
   order: number;
 }
 
-const LionEditor = () => {
+const LionEditor = (props: EditorProps) => {
   const renderElement = useCallback(
     (props: ElementProps) => <CustomElement {...props} />,
     []
@@ -53,15 +58,10 @@ const LionEditor = () => {
   const editor = useMemo(() => {
     return withPlugins(withHistory(withReact(createEditor())));
   }, []);
-  const initialValue = useMemo(() => {
-    const localStorageContent = localStorage.getItem("content");
-    const data = localStorageContent
-      ? JSON.parse(localStorageContent)
-      : defaultValue;
-    return data;
-  }, []);
 
-  const [slateValue, setSlateValue] = useState<Descendant[]>([]);
+  const [slateValue, setSlateValue] = useState<Descendant[]>(
+    props.DefaultContent ? props.DefaultContent : []
+  );
 
   const [anchorList, setAnchorList] = useState<AnchorData[]>(() => {
     const anchor = localStorage.getItem("anchor");
@@ -71,9 +71,15 @@ const LionEditor = () => {
     return [];
   });
 
+  // store the content after state change
   useEffect(() => {
-    setSlateValue(initialValue);
-  }, [initialValue]);
+    let timer = setTimeout(() => {
+      props.onSaveContent(slateValue);
+    }, 3000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [slateValue]);
 
   const addAnchorHandler = (data: AnchorData) => {
     console.log(data);
@@ -108,11 +114,12 @@ const LionEditor = () => {
     const anchor = JSON.stringify(nodeWithId);
     localStorage.setItem("anchor", anchor);
   };
-
+  console.log(slateValue);
   return (
     <Slate
       editor={editor}
-      value={initialValue}
+      // value={initialValue}
+      value={props.DefaultContent ? props.DefaultContent : []}
       onChange={(value) => {
         const isAstChange = editor.operations.some(
           (op) => op.type !== "set_selection"
@@ -133,7 +140,7 @@ const LionEditor = () => {
           padding-top: 100px;
         `}
       >
-        <NavigationWrapper />
+        {/* <NavigationWrapper /> */}
         <Title />
         <Toolbar1 callback={[addAnchorHandler, removeAnchorHandler]} />
         <Toolbar2 />
@@ -154,7 +161,7 @@ const LionEditor = () => {
           <HoveringToolbar />
         </div>
       </div>
-      
+
       <div
         className={css`
           position: fixed;
