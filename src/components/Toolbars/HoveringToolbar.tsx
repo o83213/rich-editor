@@ -38,8 +38,12 @@ const HoveringToolbar = () => {
     <Menu
       ref={ref}
       className={css`
+        height: 30px;
         padding: 8px 7px 6px;
         position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: start;
         z-index: 1;
         top: -10000px;
         left: -10000px;
