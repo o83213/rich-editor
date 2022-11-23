@@ -74,6 +74,12 @@ export type ImageElement = {
   id?: string;
   children: EmptyText[];
 };
+export type UnsplashElement = {
+  type: "unsplash";
+  url: string;
+  id?: string;
+  children: EmptyText[];
+};
 export type VideoElement = {
   type: "video";
   url: string;
@@ -128,6 +134,7 @@ type CustomElement =
   | HeadingOneElement
   | HeadingTwoElement
   | ImageElement
+  | UnsplashElement
   | LinkElement
   | VideoElement
   | ParagraphElement

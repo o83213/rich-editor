@@ -21,6 +21,17 @@ import Title from "./Title/Title";
 import Toolbar1 from "./Toolbars/Toolbar1";
 import Toolbar2 from "./Toolbars/Toolbar2";
 import HoveringToolbar from "./Toolbars/HoveringToolbar";
+import UnsplashModal from "../util/UnsplashModal";
+import { insertUnsplash } from "../plugins/helpers/insertUnsplash";
+interface HotKeyType {
+  [key: string]: string;
+}
+const HOTKEYS: HotKeyType = {
+  "mod+b": "bold",
+  "mod+i": "italic",
+  "mod+u": "underline",
+  "mod+`": "code",
+};
 
 interface EditorProps {
   onSaveContent: (content: Descendant[]) => void;
@@ -62,6 +73,35 @@ const LionEditor = (props: EditorProps) => {
   const [slateValue, setSlateValue] = useState<Descendant[]>(
     props.DefaultContent ? props.DefaultContent : []
   );
+
+  // TODO: unsplash區塊 start-----------------------------------
+  const [pageNum, setPageNum] = useState<number>(1);
+  const [unsplashSearchValue, setUnsplashSearchValue] = useState<string>("");
+  const [selectUnsplashImage, setSelectUnsplashImage] = useState<string>("");
+  const [isUnsplash, setIsUnsplash] = useState<boolean>(false);
+  const [unsplashData, setunsplashData] = useState<any>([]);
+
+  // 抓取圖庫照片api
+  const unsplashApi = `https://api.unsplash.com/search/photos?query=${unsplashSearchValue}&per_page=20&page=${pageNum}&client_id=9X0tz1aIDBowBtwGmgk5Q7xzSJqAwWiISn9NTLfN-mg`;
+  async function getNewImage() {
+    return fetch(unsplashApi)
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log("✨data", data);
+        setunsplashData(data);
+      });
+  }
+
+  // 打api取得unsplash資料
+  useEffect(() => {
+    getNewImage();
+  }, [isUnsplash, pageNum, unsplashSearchValue]);
+
+  useEffect(() => {
+    // console.log("selectUnsplashImage", selectUnsplashImage);
+    if (selectUnsplashImage !== "") insertUnsplash(editor, selectUnsplashImage);
+  }, [selectUnsplashImage]);
+  // unsplash區塊 end-----------------------------------------------
 
   const [anchorList, setAnchorList] = useState<AnchorData[]>(() => {
     const anchor = localStorage.getItem("anchor");
@@ -143,7 +183,22 @@ const LionEditor = (props: EditorProps) => {
         {/* <NavigationWrapper /> */}
         <Title />
         <Toolbar1 callback={[addAnchorHandler, removeAnchorHandler]} />
-        <Toolbar2 />
+        <Toolbar2
+          setIsUnsplash={setIsUnsplash}
+          isUnsplash={isUnsplash}
+          selectUnsplashImage={selectUnsplashImage}
+        />
+        {isUnsplash && (
+          <UnsplashModal
+            unsplashData={unsplashData}
+            setIsUnsplash={setIsUnsplash}
+            isUnsplash={isUnsplash}
+            pageNum={pageNum}
+            setPageNum={setPageNum}
+            setUnsplashSearchValue={setUnsplashSearchValue}
+            setSelectUnsplashImage={setSelectUnsplashImage}
+          />
+        )}
         <div
           className={css`
             width: 100%;

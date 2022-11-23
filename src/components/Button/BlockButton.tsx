@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useSlate } from "slate-react";
 import { css, cx } from "@emotion/css";
 
@@ -7,7 +8,8 @@ import { toggleBlock } from "../../plugins/helpers/toggleBlock";
 import { unwrapLink } from "../../plugins/helpers/unwrapLink";
 import { isUrl } from "../../util/isUrl";
 import Description from "../Description/Description";
-
+import UnsplashModal from "../../util/UnsplashModal";
+import { insertUnsplash } from "../../plugins/helpers/insertUnsplash";
 const TEXT_ALIGN_TYPES = ["left", "center", "right", "justify"];
 
 interface ButtonProps {
@@ -16,6 +18,9 @@ interface ButtonProps {
   callback?: Function[];
   className?: string;
   description: string;
+  setIsUnsplash?: (isUnsplash: boolean) => void | undefined;
+  isUnsplash?: boolean;
+  selectUnsplashImage?: string;
 }
 
 const BlockButton = ({
@@ -24,6 +29,9 @@ const BlockButton = ({
   callback,
   description,
   className,
+  setIsUnsplash,
+  isUnsplash,
+  selectUnsplashImage,
 }: ButtonProps) => {
   const editor = useSlate();
 
@@ -42,7 +50,7 @@ const BlockButton = ({
         format,
         TEXT_ALIGN_TYPES.includes(format) ? "align" : "type"
       )}
-      onMouseDown={(event: React.MouseEvent) => {
+      onMouseDown={async (event: React.MouseEvent) => {
         event.preventDefault();
 
         if (icon === "link_off") {
@@ -60,6 +68,13 @@ const BlockButton = ({
           return toggleBlock(editor, format, url);
         }
 
+        if (format === "unsplash") {
+          setIsUnsplash?.(!isUnsplash);
+          // console.log("selectUnsplashImage🤐", selectUnsplashImage);
+
+          // insertUnsplash(editor, selectUnsplashImage);
+          // return toggleBlock(editor, format);
+        }
         if (format === "video") {
           const url = window.prompt("Enter the URL of the image:");
           if (!url) {
@@ -81,7 +96,20 @@ const BlockButton = ({
           }
           return toggleBlock(editor, format, url);
         }
-        toggleBlock(editor, format);
+        if (format === "table") {
+          const row = window.prompt("Enter the row of the Table:");
+          const column = window.prompt("Enter the column of the Table:");
+          if (!row || !column) {
+            alert("Not a valid input!");
+            return;
+          }
+          if (+row <= 1 || +column <= 1) {
+            alert("Row and Column must greater than 1!");
+            return;
+          }
+          return toggleBlock(editor, format, "", callback, +row, +column);
+        }
+        toggleBlock(editor, format); // 插入圖片會走這裡
       }}
     >
       <Description description={description} />

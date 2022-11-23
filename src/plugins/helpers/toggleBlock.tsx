@@ -7,6 +7,8 @@ import { insertIframe } from "./insertIframe";
 import { insertVideo } from "./insertVideo";
 import { insertTable } from "./insertTable";
 import { insertHorizontal } from "./insertHorizontal";
+import { insertUnsplash } from "./insertUnsplash";
+import UnsplashModal from "../../util/UnsplashModal";
 import { addAnchor } from "../helpers/insertAnchor";
 
 const LIST_TYPES = ["numbered-list", "bulleted-list"];
@@ -95,6 +97,8 @@ export const toggleBlock = async (
     hiddenInput.click();
   } else if (format === "horizontal") {
     insertHorizontal(editor);
+  } else if (format === "unsplash") {
+    // insertUnsplash(editor, url);
   } else if (format === "video") {
     insertVideo(editor, url);
   } else if (format === "embed") {
