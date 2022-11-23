@@ -20,7 +20,7 @@ const Toolbar2 = (props: {
         border-radius: 6px;
         height: 38px;
         display: flex;
-        z-index: 1;
+        z-index: 3;
       `}
     >
       <div
