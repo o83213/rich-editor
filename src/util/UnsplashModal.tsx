@@ -1,5 +1,5 @@
 import { css } from "@emotion/css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "../components/BaseComponents";
 
 interface UnsplashModalType {
@@ -23,6 +23,10 @@ const UnsplashModal = (props: UnsplashModalType) => {
     setSelectUnsplashImage,
   } = props;
   const unsplashArr = unsplashData?.results;
+  const [unsplashPos, setUnsplashPos] = useState<number>(0);
+  useEffect(() => {
+    setUnsplashPos(window.scrollY);
+  }, [window.scrollY]);
 
   const handleNextPage = () => {
     if (pageNum === unsplashData.total_pages) {
@@ -42,18 +46,19 @@ const UnsplashModal = (props: UnsplashModalType) => {
   return (
     <div
       className={css`
-        position: relative;
+        position: absolute;
         display: flex;
         flex-direction: column;
         width: 54%;
-        margin: 0 auto;
+        left: 50%;
+        transform: translate(-50%, ${unsplashPos}px);
         pointer-events: auto;
         background-color: #fff;
         background-clip: padding-box;
         border: 1px solid rgba(0, 0, 0, 0.2);
         border-radius: 20px;
         outline: 0;
-        /* z-index: 2; */
+        z-index: 2;
         box-shadow: 8px 8px 2px 1px rgba(86, 86, 86, 0.2);
       `}
     >

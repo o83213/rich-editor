@@ -87,7 +87,7 @@ const LionEditor = () => {
     return fetch(unsplashApi)
       .then((res) => res.json())
       .then((data) => {
-        console.log("✨data", data);
+        // console.log("✨data", data);
         setunsplashData(data);
       });
   }
@@ -98,10 +98,11 @@ const LionEditor = () => {
   }, [isUnsplash, pageNum, unsplashSearchValue]);
 
   useEffect(() => {
-    console.log("selectUnsplashImage", selectUnsplashImage);
+    // console.log("selectUnsplashImage", selectUnsplashImage);
     if (selectUnsplashImage !== "") insertUnsplash(editor, selectUnsplashImage);
   }, [selectUnsplashImage]);
   // unsplash區塊 end-----------------------------------------------
+
   const [anchorList, setAnchorList] = useState<AnchorData[]>(() => {
     const anchor = localStorage.getItem("anchor");
     if (anchor) {
@@ -180,6 +181,17 @@ const LionEditor = () => {
           isUnsplash={isUnsplash}
           selectUnsplashImage={selectUnsplashImage}
         />
+        {isUnsplash && (
+          <UnsplashModal
+            unsplashData={unsplashData}
+            setIsUnsplash={setIsUnsplash}
+            isUnsplash={isUnsplash}
+            pageNum={pageNum}
+            setPageNum={setPageNum}
+            setUnsplashSearchValue={setUnsplashSearchValue}
+            setSelectUnsplashImage={setSelectUnsplashImage}
+          />
+        )}
         <div
           className={css`
             width: 100%;
@@ -196,17 +208,6 @@ const LionEditor = () => {
           />
           <HoveringToolbar />
         </div>
-        {isUnsplash && (
-          <UnsplashModal
-            unsplashData={unsplashData}
-            setIsUnsplash={setIsUnsplash}
-            isUnsplash={isUnsplash}
-            pageNum={pageNum}
-            setPageNum={setPageNum}
-            setUnsplashSearchValue={setUnsplashSearchValue}
-            setSelectUnsplashImage={setSelectUnsplashImage}
-          />
-        )}
       </div>
 
       <div
