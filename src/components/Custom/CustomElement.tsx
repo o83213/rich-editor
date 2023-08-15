@@ -55,6 +55,7 @@ const CustomElement = (props: any) => {
     case "horizontal":
       return <HorizontalElement {...{ ...props, element }} />;
     case "unsplash":
+      console.log("element", element);
       return <UnsplashElement {...{ ...props, element }} />;
     case "anchor":
       return (

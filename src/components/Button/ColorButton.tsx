@@ -17,7 +17,11 @@ const StateButton = (props: any) => {
     setColor(newColor);
   };
   return (
-    <div>
+    <div
+      className={css`
+        position: relative;
+      `}
+    >
       <Button
         buttonColor={color}
         onMouseDown={(event) => {
@@ -29,14 +33,24 @@ const StateButton = (props: any) => {
       </Button>
       <Button
         className={css`
-          position: relative;
+          position: absolute;
+          top: 0px;
+          right: -5px;
+          display: inline-block;
         `}
         onMouseDown={(event) => {
           event.preventDefault();
           setIsChange((prev) => !prev);
         }}
       >
-        <Icon>{"arrow_drop_down"}</Icon>
+        <Icon
+          className={css`
+            font-size: 14px;
+            vertical-align: top;
+          `}
+        >
+          {"arrow_drop_down"}
+        </Icon>
         {isChange && <ColorPalte cb={changeColorHandler} />}
       </Button>
     </div>

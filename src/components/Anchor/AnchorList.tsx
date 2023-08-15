@@ -7,6 +7,7 @@ type Props = {
   listData: { name: string; id: string; type: string; order: number }[];
 };
 const AnchorList = ({ listData }: Props) => {
+  console.log("listData", listData);
   const [showAnchorList, setShowAnchorList] = useState(false);
   return (
     <div

@@ -36,6 +36,7 @@ const UnsplashElement = (props: any) => {
             box-shadow: ${selected && focused ? "0 0 0 3px #B4D5FF" : "none"};
           `}
         />
+        <div>I am unsplash image!</div>
 
         <Button
           active

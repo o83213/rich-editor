@@ -9,7 +9,10 @@ interface UnsplashModalType {
   pageNum: number;
   setPageNum: (pageNum: number) => void;
   setUnsplashSearchValue: (unsplashSearchValue: string) => void;
-  setSelectUnsplashImage: (selectUnsplashImage: string) => void;
+  setSelectUnsplashImage: (
+    newUnsplashImage: { id: string; imageUrl: string }[]
+  ) => void;
+  selectUnsplashImage: { id: string; imageUrl: string }[];
 }
 
 const UnsplashModal = (props: UnsplashModalType) => {
@@ -21,9 +24,11 @@ const UnsplashModal = (props: UnsplashModalType) => {
     setPageNum,
     setUnsplashSearchValue,
     setSelectUnsplashImage,
+    selectUnsplashImage,
   } = props;
   const unsplashArr = unsplashData?.results;
   const [unsplashPos, setUnsplashPos] = useState<number>(0);
+  console.log("unsplashArr", unsplashArr);
   useEffect(() => {
     setUnsplashPos(window.scrollY);
   }, [window.scrollY]);
@@ -251,51 +256,58 @@ const UnsplashModal = (props: UnsplashModalType) => {
               transition: height 480ms ease-out 0s;
             `}
           >
-            {unsplashArr?.map(
-              (v: { urls: string | undefined | any }, i: any) => {
-                return (
-                  <>
-                    <div
-                      key={i}
+            {unsplashArr?.map((item: any) => {
+              console.log("item", item);
+              return (
+                <>
+                  <div
+                    key={item.id}
+                    className={css`
+                      width: 140px;
+                      /* padding: 5px 0; */
+                      word-wrap: break-word;
+                      -webkit-column-break-inside: avoid;
+                      opacity: 1;
+                      transition: opacity 480ms
+                          cubic-bezier(0.165, 0.84, 0.44, 1) 0s,
+                        transform 480ms cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
+                      cursor: pointer;
+                    `}
+                  >
+                    <img
+                      src={item.urls.regular}
+                      alt=""
                       className={css`
-                        width: 140px;
-                        /* padding: 5px 0; */
-                        word-wrap: break-word;
-                        -webkit-column-break-inside: avoid;
+                        max-width: 100%;
+                        min-height: 100%;
+                        object-fit: cover;
                         opacity: 1;
-                        transition: opacity 480ms
-                            cubic-bezier(0.165, 0.84, 0.44, 1) 0s,
-                          transform 480ms cubic-bezier(0.165, 0.84, 0.44, 1) 0s;
-                        cursor: pointer;
+                        &:hover {
+                          opacity: 0.8;
+                        }
                       `}
-                    >
-                      <img
-                        src={v.urls.regular}
-                        alt=""
-                        className={css`
-                          max-width: 100%;
-                          min-height: 100%;
-                          object-fit: cover;
-                          opacity: 1;
-                          &:hover {
-                            opacity: 0.8;
-                          }
-                        `}
-                        onClick={(e) => {
-                          console.log("unsplashData in modal", unsplashData);
-                          console.log(
-                            "e.currentTarget.src",
-                            e.currentTarget.src
-                          );
-                          setSelectUnsplashImage(e.currentTarget.src);
-                          setIsUnsplash?.(false);
-                        }}
-                      />
-                    </div>
-                  </>
-                );
-              }
-            )}
+                      onClick={(e) => {
+                        console.log("unsplashData in modal", unsplashData);
+                        console.log("e.currentTarget.src", e.currentTarget.src);
+                        setIsUnsplash?.(false);
+                        console.log("selectUnsplashImage", selectUnsplashImage);
+                        if (
+                          selectUnsplashImage.findIndex(
+                            (item: any) => item === e.currentTarget.src
+                          ) === -1
+                        ) {
+                          const newSelectUnsplashImage = [
+                            ...selectUnsplashImage,
+                            e.currentTarget.src,
+                          ];
+                          // setSelectUnsplashImage([...selectUnsplashImage]);
+                        }
+                      }}
+                    />
+                  </div>
+                </>
+              );
+            })}
           </div>
         </div>
         <hr />

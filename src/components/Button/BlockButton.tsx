@@ -70,10 +70,6 @@ const BlockButton = ({
 
         if (format === "unsplash") {
           setIsUnsplash?.(!isUnsplash);
-          // console.log("selectUnsplashImage🤐", selectUnsplashImage);
-
-          // insertUnsplash(editor, selectUnsplashImage);
-          // return toggleBlock(editor, format);
         }
         if (format === "video") {
           const url = window.prompt("Enter the URL of the image:");

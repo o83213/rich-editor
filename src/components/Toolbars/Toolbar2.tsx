@@ -1,88 +1,65 @@
-import React, { useState } from "react";
-import { css, cx } from "@emotion/css";
+import { cx, css } from "@emotion/css";
+import MarkButton from "../Button/MarkButton";
 import BlockButton from "../Button/BlockButton";
-import VerticalLine from "./VerticalLine";
-const Toolbar2 = (props: {
-  setIsUnsplash: any;
-  isUnsplash: boolean;
-  selectUnsplashImage: string;
-}) => {
-  const { setIsUnsplash, isUnsplash, selectUnsplashImage } = props;
-  const [isActive, setIsActive] = useState(false);
+import HorizontalLine from "./HorizontalLine";
+interface ToolbarProps {
+  callback?: Function[];
+}
 
+const Toolbar2 = (props: ToolbarProps) => {
+  const { callback } = props;
   return (
     <div
       className={css`
-        position: fixed;
-        left: calc(((100vw - 740px) / 2) - 100px + 38px + 18px);
         top: 279px;
-        transition: top 0.1s ease-in-out 0s;
+        transform: translateX(calc(((100vw - 740px) / 2) - 150px));
+        border: 1px solid rgb(221, 217, 216);
+        background: rgb(255, 255, 255);
+        box-shadow: rgb(0 0 0 / 8%) 0px 2px 6px 0px;
         border-radius: 6px;
-        height: 38px;
+        z-index: 10;
+        position: fixed;
+        width: 40px;
+        height: 250px;
+        padding: 13px 0px;
         display: flex;
-        z-index: 3;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 6px;
+        -webkit-box-align: center;
+        align-items: center;
+        .tag {
+          transform: translate(-120%, -100%);
+        }
       `}
     >
-      <div
+      <BlockButton
         className={css`
-          width: 38px;
-          height: 100%;
-          border-radius: 6px;
-          background: rgb(246, 246, 246);
-          color: rgb(162, 156, 155);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
+          transform: scaleX(-1);
         `}
-        onClick={() => {
-          setIsActive((prev) => !prev);
-        }}
-      >
-        <span
-          className={cx(
-            "material-icons",
-            css`
-              font-size: 28px;
-            `
-          )}
-        >
-          add
-        </span>
-      </div>
-      {isActive && (
-        <div
-          className={css`
-            border: 1px solid rgb(221, 217, 216);
-            background: rgb(255, 255, 255);
-            box-shadow: rgb(0 0 0 / 8%) 0px 2px 6px 0px;
-            border-radius: 4px;
-            transition: opacity 0.75s;
-            /* color: rgb(162, 156, 155); */
-            height: 38px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-          `}
-        >
-          <VerticalLine />
-          <BlockButton format="image" icon="image" description="上傳圖片" />
-          <BlockButton
-            format="unsplash"
-            icon="image_search"
-            description="圖庫"
-            setIsUnsplash={setIsUnsplash}
-            isUnsplash={isUnsplash}
-            selectUnsplashImage={selectUnsplashImage}
-          />
-          <BlockButton format="video" icon="html" description="嵌入網站" />
-          <BlockButton
-            format="horizontal"
-            icon="horizontal_rule"
-            description="分隔線"
-          />
-        </div>
-      )}
+        format="sub-title"
+        icon="format_size"
+        description="副標題"
+        callback={callback}
+      />
+      <BlockButton format="quote" icon="format_quote" description="引言" />
+      <BlockButton format="code" icon="code" description="程式碼" />
+      <HorizontalLine />
+      <BlockButton
+        format="center"
+        icon="format_align_center"
+        description="邊更對齊"
+      />
+      <BlockButton
+        format="numbered-list"
+        icon="format_list_numbered"
+        description="項目符號"
+      />
+      <BlockButton
+        format="bulleted-list"
+        icon="format_list_bulleted"
+        description="數字項目符號"
+      />
     </div>
   );
 };

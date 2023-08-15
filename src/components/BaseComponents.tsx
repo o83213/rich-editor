@@ -29,13 +29,16 @@ export const Button = ({
         css`
           display: block;
           cursor: pointer;
-          color: ${active ? "rgb(255, 72, 90)" : "#000"};
+          color: ${buttonColor
+            ? buttonColor
+            : active
+            ? "rgb(255, 72, 90)"
+            : "#000"};
         `
       )}
     />
   );
 };
-
 export const Icon = ({ className, ...props }: BaseProps) => {
   return (
     <span

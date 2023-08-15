@@ -20,7 +20,7 @@ import NavigationWrapper from "./Navigation/NavigationWrapper";
 import Title from "./Title/Title";
 import Toolbar1 from "./Toolbars/Toolbar1";
 import Toolbar2 from "./Toolbars/Toolbar2";
-import HoveringToolbar from "./Toolbars/HoveringToolbar";
+import Toolbar3 from "./Toolbars/Toolbar3";
 import UnsplashModal from "../util/UnsplashModal";
 import { insertUnsplash } from "../plugins/helpers/insertUnsplash";
 interface HotKeyType {
@@ -77,12 +77,17 @@ const LionEditor = (props: EditorProps) => {
   // TODO: unsplash區塊 start-----------------------------------
   const [pageNum, setPageNum] = useState<number>(1);
   const [unsplashSearchValue, setUnsplashSearchValue] = useState<string>("");
-  const [selectUnsplashImage, setSelectUnsplashImage] = useState<string>("");
+  const [selectUnsplashImage, setSelectUnsplashImage] = useState<
+    { id: string; imageUrl: string }[]
+  >([]);
   const [isUnsplash, setIsUnsplash] = useState<boolean>(false);
   const [unsplashData, setunsplashData] = useState<any>([]);
 
   // 抓取圖庫照片api
   const unsplashApi = `https://api.unsplash.com/search/photos?query=${unsplashSearchValue}&per_page=20&page=${pageNum}&client_id=9X0tz1aIDBowBtwGmgk5Q7xzSJqAwWiISn9NTLfN-mg`;
+  //
+  console.log("selectUnsplashImage: ", selectUnsplashImage);
+  //
   async function getNewImage() {
     return fetch(unsplashApi)
       .then((res) => res.json())
@@ -99,7 +104,6 @@ const LionEditor = (props: EditorProps) => {
 
   useEffect(() => {
     // console.log("selectUnsplashImage", selectUnsplashImage);
-    if (selectUnsplashImage !== "") insertUnsplash(editor, selectUnsplashImage);
   }, [selectUnsplashImage]);
   // unsplash區塊 end-----------------------------------------------
 
@@ -180,14 +184,10 @@ const LionEditor = (props: EditorProps) => {
           padding-top: 100px;
         `}
       >
-        {/* <NavigationWrapper /> */}
         <Title />
-        <Toolbar1 callback={[addAnchorHandler, removeAnchorHandler]} />
-        <Toolbar2
-          setIsUnsplash={setIsUnsplash}
-          isUnsplash={isUnsplash}
-          selectUnsplashImage={selectUnsplashImage}
-        />
+        <Toolbar1 />
+        <Toolbar2 callback={[addAnchorHandler, removeAnchorHandler]} />
+        <Toolbar3 setIsUnsplash={setIsUnsplash} isUnsplash={isUnsplash} />
         {isUnsplash && (
           <UnsplashModal
             unsplashData={unsplashData}
@@ -197,6 +197,7 @@ const LionEditor = (props: EditorProps) => {
             setPageNum={setPageNum}
             setUnsplashSearchValue={setUnsplashSearchValue}
             setSelectUnsplashImage={setSelectUnsplashImage}
+            selectUnsplashImage={selectUnsplashImage}
           />
         )}
         <div
@@ -213,7 +214,6 @@ const LionEditor = (props: EditorProps) => {
             spellCheck
             autoFocus
           />
-          <HoveringToolbar />
         </div>
       </div>
 

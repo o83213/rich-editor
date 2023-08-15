@@ -2,6 +2,7 @@ import { cx, css } from "@emotion/css";
 import MarkButton from "../Button/MarkButton";
 import BlockButton from "../Button/BlockButton";
 import HorizontalLine from "./HorizontalLine";
+import StateButton from "../Button/ColorButton";
 interface ToolbarProps {
   callback?: Function[];
 }
@@ -20,44 +21,39 @@ const Toolbar1 = (props: ToolbarProps) => {
         z-index: 10;
         position: fixed;
         width: 40px;
-        height: 241px;
+        height: 250px;
         padding: 13px 0px;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: flex-start;
+        gap: 6px;
         -webkit-box-align: center;
         align-items: center;
+        .tag {
+          transform: translate(20%, -100%);
+        }
       `}
     >
-      <BlockButton
-        className={css`
-          transform: scaleX(-1);
-        `}
-        format="sub-title"
-        icon="format_size"
-        description="副標題"
-        callback={callback}
+      <MarkButton format="bold" icon="format_bold" description="粗體" />
+      <MarkButton format="italic" icon="format_italic" description="斜體" />
+      <MarkButton
+        format="delete"
+        icon="format_strikethrough"
+        description="刪除線"
       />
-      <BlockButton format="quote" icon="format_quote" description="引言" />
-      <BlockButton format="code" icon="code" description="程式碼" />
-      <HorizontalLine />
-      <BlockButton
-        format="center"
-        icon="format_align_center"
-        description="邊更對齊"
+      <MarkButton
+        format="underline"
+        icon="format_underlined"
+        description="底線"
       />
-      <BlockButton
-        format="numbered-list"
-        icon="format_list_numbered"
-        description="項目符號"
-      />
-      <BlockButton
-        format="bulleted-list"
-        icon="format_list_bulleted"
-        description="數字項目符號"
+      <StateButton
+        format="color"
+        icon="format_color_text"
+        defaultState="black"
       />
       <HorizontalLine />
-      <BlockButton format="light_mode" icon="light_mode" description="關燈" />
+      <BlockButton format="link" icon="link" description="加入連結" />
+      <BlockButton format="link" icon="link_off" description="移除連結" />
     </div>
   );
 };
