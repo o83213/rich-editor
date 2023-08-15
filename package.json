@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Eddiewei0617/vocus-editor.git"
+    "url": "git+https://github.com/o83213/rich-editor.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Eddiewei0617/vocus-editor/issues"
+    "url": "https://github.com/o83213/rich-editor.git/issues"
   },
-  "homepage": "https://github.com/Eddiewei0617/vocus-editor#readme",
+  "homepage": "https://github.com/o83213/rich-editor#readme",
   "dependencies": {
     "@emotion/css": "^11.10.0",
     "escape-html": "^1.0.3",
